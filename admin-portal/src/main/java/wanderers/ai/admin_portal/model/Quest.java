@@ -22,4 +22,31 @@ public class Quest {
         this.expiry = expiry;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public LocalDateTime getNotBefore() {
+        return notBefore;
+    }
+
+    public LocalDateTime getExpiry() {
+        return expiry;
+    }
 }

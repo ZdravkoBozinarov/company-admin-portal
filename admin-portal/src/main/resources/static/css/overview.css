@@ -100,3 +100,21 @@
 .profile-inline .info small {
     color: #666;
 }
+
+
+// Статистики
+/* По-малки карти за статистика */
+.mini-card {
+    padding: 1rem;
+    min-height: 200px;
+    font-size: 0.9rem;
+}
+
+.mini-card h4 {
+    font-size: 1.1rem;
+}
+
+.mini-card p {
+    font-size: 0.95rem;
+}
+

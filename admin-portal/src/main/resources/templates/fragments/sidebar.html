@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h4 class="text-center py-3">
+        <i class="fas fa-gamepad me-2"></i> Admin Panel
+    </h4>
 
-</body>
-</html>
+    <a th:href="@{/}" class="d-block"><i class="fas fa-home me-2"></i>Dashboard</a>
+    <a th:href="@{/quests}" class="d-block"><i class="fas fa-bullseye me-2"></i>Quests</a>
+    <a th:href="@{/vouchers}" class="d-block"><i class="fas fa-ticket-alt me-2"></i>Vouchers</a>
+    <a th:href="@{/rewards}" class="d-block"><i class="fas fa-gift me-2"></i>Rewards</a>
+    <a th:href="@{/integrations}" class="d-block"><i class="fas fa-plug me-2"></i>Integrations</a>
+    <a th:href="@{/users}" class="d-block"><i class="fas fa-user me-2"></i>Users</a>
+    <a th:href="@{/logout}" class="d-block mt-4"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+</div>

@@ -20,6 +20,11 @@ public class QuestController {
         this.questService = questService;
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "overview";
+    }
+
     @GetMapping("/quests")
     public String showQuests(Model model) {
         List<Quest> quests = questService.getMockedQuests(); // или зареждане от JSON

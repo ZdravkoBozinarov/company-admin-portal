@@ -1,21 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: *">
-<section>
-    <h1>Добре дошли в Admin Portal</h1>
-    <p>Тук можете да управлявате вашите куестове, ваучери и награди.</p>
-
-    <div class="row mt-4">
-        <div class="col-md-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <i class="fas fa-bullseye fa-2x"></i>
-                    <h5 class="card-title mt-2">Quests</h5>
-                    <p class="card-text">Създавайте и управлявайте куестове за потребители.</p>
-                    <a th:href="@{/quests}" class="btn btn-primary">Към Quests</a>
-                </div>
-            </div>
-        </div>
-        <!-- Add more cards for Rewards, Vouchers, etc. -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Overview</title>
+</head>
+<body>
+<div th:replace="layout :: layout">
+    <div th:fragment="content">
+        <h1>Добре дошъл!</h1>
+        <p>Това е началната страница на админ панела.</p>
     </div>
-</section>
+</div>
+</body>
 </html>

@@ -35,8 +35,3 @@ body {
     flex-grow: 1;
     padding: 2rem 3rem;
 }
-
-.card-img-top {
-    object-fit: cover;
-    height: 180px;
-}

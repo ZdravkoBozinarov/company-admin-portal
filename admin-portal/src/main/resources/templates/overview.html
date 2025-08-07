@@ -5,47 +5,64 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/overview.css}">
 </head>
 <body>
 <div th:replace="layout :: layout">
     <div th:fragment="content">
-        <!-- Лого -->
-        <img th:src="@{/images/logo.png}" alt="Company Logo" width="100" class="mb-4">
+        <div class="container-fluid">
+            <!-- Заглавие + профил -->
+            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    <img alt="Logo" height="60" th:src="@{/images/wanderers-black.png}">
+                    <div>
+                        <h1 class="mb-1" style="color: #F2168F;">Добре дошъл в <strong>Admin Portal</strong></h1>
+                        <p class="text-muted">Управление на игрови модули, куестове, ваучери, награди и интеграции.</p>
+                    </div>
+                </div>
 
-        <!-- Заглавие -->
-        <h1><i class="fas fa-tachometer-alt me-2"></i>Добре дошъл в Admin Portal</h1>
-        <p class="text-muted">Това е вътрешен панел за управление на игрови модули, потребителски куестове, ваучери и награди. Достъпът е ограничен до вътрешен екип.</p>
+                <div class="profile-inline">
+                    <img alt="Zdravko Boinarov" th:src="@{/images/logo.png}">
+                    <div class="info">
+                        <h6>Zdravko Boinarov</h6>
+                        <small>Spring Developer</small>
+                    </div>
+                </div>
+            </div>
 
-        <!-- Секции -->
-        <div class="row mt-4">
-            <div class="col-md-6 mb-3">
+            <!-- Модули -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="module-card">
                 <h4><i class="fas fa-bullseye me-2"></i>Quests</h4>
-                <p>Управлявай куестове, които могат да бъдат свързани с кампании, мисии и награди. Всеки куест може да бъде активен или с ограничено време.</p>
+                        <p>Създавай, редактирай и управлявай куестове. Поддържа категории, видимост и срокове.</p>
             </div>
-            <div class="col-md-6 mb-3">
-                <h4><i class="fas fa-gift me-2"></i>Rewards</h4>
-                <p>Създавай и свързвай награди както към куестове, така и към ваучери. Разделение по тип: дигитални, физически и в-гейм.</p>
-            </div>
-            <div class="col-md-6 mb-3">
+                </div>
+                <div class="col-md-6">
+                    <div class="module-card">
                 <h4><i class="fas fa-ticket-alt me-2"></i>Vouchers</h4>
-                <p>Генерирай и управлявай ваучери, проследявай използвани и неизползвани. Всеки ваучер може да има индивидуална стойност и награда.</p>
+                        <p>Управление на всички ваучери. Поддържа статус, импортиране, изтичане и награди, свързани с
+                            тях.</p>
             </div>
-            <div class="col-md-6 mb-3">
-                <h4><i class="fas fa-plug me-2"></i>Integrations</h4>
-                <p>Връзки с платформи като Discord, Steam, YouTube и други. Извличане на статистики, активни потребители и събития.</p>
+                </div>
+                <div class="col-md-6">
+                    <div class="module-card">
+                        <h4><i class="fas fa-gift me-2"></i>Rewards</h4>
+                        <p>Награди, приложими към куестове или ваучери. Могат да бъдат дигитални, физически или
+                            в-гейм.</p>
             </div>
         </div>
-
-        <!-- Авторска визитка -->
-        <div class="card shadow-sm position-absolute" style="top: 2rem; right: 2rem; width: 220px;">
-            <img th:src="@{/images/profile.png}" class="card-img-top" alt="Zdravko Boinarov">
-            <div class="card-body text-center">
-                <h5 class="card-title mb-0">Zdravko Boinarov</h5>
-                <small class="text-muted">Spring Developer</small>
+                <div class="col-md-6">
+                    <div class="module-card">
+                        <h4><i class="fas fa-plug me-2"></i>Integrations</h4>
+                        <p>Свързване с външни платформи като Discord, Steam, YouTube и др. Извличане на данни и
+                            статистики.</p>
             </div>
         </div>
     </div>
-
 </div>
+    </div>
+</div>
+
 </body>
 </html>

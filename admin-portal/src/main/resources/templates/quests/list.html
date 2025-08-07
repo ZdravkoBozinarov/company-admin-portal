@@ -2,66 +2,74 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Quests</title>
+
+    <!-- Bootstrap + FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Локални стилове -->
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
     <link rel="stylesheet" th:href="@{/css/overview.css}">
+    <link rel="stylesheet" th:href="@{/css/quest.css}"> <!-- остава за фини настройки -->
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
     <div th:fragment="content">
-        <div class="container py-5">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
-                <a th:href="@{/quests/create}" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Нов куест
-                </a>
-            </div>
+        <div class="container py-5" style="max-width: 1000px;">
+            <div class="mx-auto">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
+                    <a th:href="@{/quests/create}" class="btn btn-success">
+                        <i class="fas fa-plus"></i> Нов куест
+                    </a>
+                </div>
 
-            <table class="table table-bordered table-hover shadow-sm">
-                <thead class="table-dark">
-                <tr>
-                    <th>#</th>
-                    <th>Име</th>
-                    <th>Категория</th>
-                    <th>Статус</th>
-                    <th>Видимост</th>
-                    <th>Начало</th>
-                    <th>Край</th>
-                    <th>Действия</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="quest : ${quests}">
-                    <td th:text="${quest.id}">1</td>
-                    <td>
-                        <b th:text="${quest.name}">Quest Name</b><br/>
-                        <small class="text-muted" th:text="${quest.subtitle}">Subtitle</small>
-                    </td>
-                    <td th:text="${quest.category}">gamer</td>
-                    <td>
-                <span th:text="${quest.enabled ? 'Активен' : 'Деактивиран'}"
-                      th:classappend="${quest.enabled} ? 'text-success fw-bold' : 'text-danger fw-bold'"></span>
-                    </td>
-                    <td>
-                <span th:text="${quest.hidden ? 'Скрит' : 'Виден'}"
-                      th:classappend="${quest.hidden} ? 'text-warning' : 'text-primary'"></span>
-                    </td>
-                    <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd') : '-'}">
-                        -
-                    </td>
-                    <td th:text="${quest.expiry != null ? #temporals.format(quest.expiry, 'yyyy-MM-dd') : '-'}">-</td>
-                    <td>
-                        <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-outline-primary">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                <table class="table table-bordered table-hover shadow-sm">
+                    <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Име</th>
+                        <th>Категория</th>
+                        <th>Статус</th>
+                        <th>Видимост</th>
+                        <th>Начало</th>
+                        <th>Край</th>
+                        <th>Действия</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="quest : ${quests}">
+                        <td th:text="${quest.id}">1</td>
+                        <td>
+                            <b th:text="${quest.name}">Quest Name</b><br/>
+                            <small class="text-muted" th:text="${quest.subtitle}">Subtitle</small>
+                        </td>
+                        <td th:text="${quest.category}">gamer</td>
+                        <td>
+                        <span th:text="${quest.enabled ? 'Активен' : 'Деактивиран'}"
+                              th:classappend="${quest.enabled} ? 'text-success fw-bold' : 'text-danger fw-bold'"></span>
+                        </td>
+                        <td>
+                        <span th:text="${quest.hidden ? 'Скрит' : 'Виден'}"
+                              th:classappend="${quest.hidden} ? 'text-warning' : 'text-primary'"></span>
+                        </td>
+                        <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd') : '-'}">
+                            -
+                        </td>
+                        <td th:text="${quest.expiry != null ? #temporals.format(quest.expiry, 'yyyy-MM-dd') : '-'}">-
+                        </td>
+                        <td>
+                            <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

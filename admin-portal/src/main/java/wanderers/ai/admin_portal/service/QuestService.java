@@ -28,9 +28,7 @@ public class QuestService {
     public void update(Long id, Quest updatedQuest) {
         Quest quest = findById(id);
         if (quest == null) return;
-        // тук копирай нужните полета
         quest.setName(updatedQuest.getName());
-        // ...
         questRepository.save(quest);
     }
 }

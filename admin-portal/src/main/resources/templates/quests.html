@@ -1,10 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: *">
+<section>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🎯 Quests</h2>
+        <a th:href="@{/quests/create}" class="btn btn-success">
+            <i class="fas fa-plus"></i> Нов куест
+        </a>
+    </div>
 
-</body>
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Име</th>
+            <th>Тип</th>
+            <th>Начало</th>
+            <th>Край</th>
+            <th>Активен</th>
+            <th>Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="quest, iStat : ${quests}">
+            <td th:text="${iStat.index + 1}"></td>
+            <td th:text="${quest.name}">Quest name</td>
+            <td th:text="${quest.type}">Type</td>
+            <td th:text="${quest.startDate}">2025-08-01</td>
+            <td th:text="${quest.endDate}">2025-09-01</td>
+            <td>
+                    <span th:text="${quest.active ? 'Да' : 'Не'}"
+                          th:classappend="${quest.active} ? 'text-success' : 'text-danger'"></span>
+            </td>
+            <td>
+                <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
 </html>

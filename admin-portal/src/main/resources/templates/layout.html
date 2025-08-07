@@ -38,8 +38,6 @@
     <a th:href="@{/integrations}" class="d-block"><i class="fas fa-plug me-2"></i>Integrations</a>
     <a th:href="@{/logout}" class="d-block"><i class="fas fa-sign-out-alt me-2"></i>Изход</a>
 </div>
-<div class="main-content">
-    <div th:replace="~{::section}"></div>
-</div>
+<div th:insert="~{::content}"></div>
 </body>
 </html>

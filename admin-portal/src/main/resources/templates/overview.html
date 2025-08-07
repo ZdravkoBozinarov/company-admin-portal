@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/overview.css}">
 </head>
 <body>
-<div th:replace="layout :: layout">
+<div th:replace="~{layout :: layout}">
     <div th:fragment="content">
         <div class="container-fluid">
             <!-- Заглавие + профил -->
@@ -22,47 +22,55 @@
                 </div>
 
                 <div class="profile-inline">
-                    <img alt="Zdravko Boinarov" th:src="@{/images/logo.png}">
+                    <img alt="Zdravko Bozinarov" th:src="@{/images/logo.png}">
                     <div class="info">
-                        <h6>Zdravko Boinarov</h6>
+                        <h6>Zdravko Bozinarov</h6>
                         <small>Spring Developer</small>
                     </div>
                 </div>
             </div>
 
             <!-- Модули -->
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <div class="module-card">
-                        <h4><i class="fas fa-bullseye me-2"></i>Quests</h4>
-                        <p>Създавай, редактирай и управлявай куестове. Поддържа категории, видимост и срокове.</p>
-                    </div>
+            <div class="row g-4 align-items-stretch">
+                <div class="col-md-6 h-100">
+                    <a th:href="@{/quests}" class="tooltip-bubble text-decoration-none text-dark"
+                       data-tooltip="Цъкни тук, за да управляваш куестове">
+                        <div class="module-card d-flex flex-column justify-content-between h-100">
+                            <h4><i class="fas fa-bullseye me-2"></i>Quests</h4>
+                            <p>Създавай, редактирай и управлявай куестове. Поддържа категории, видимост и срокове.</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-md-6">
-                    <div class="module-card">
-                        <h4><i class="fas fa-ticket-alt me-2"></i>Vouchers</h4>
-                        <p>Управление на всички ваучери. Поддържа статус, импортиране, изтичане и награди, свързани с
-                            тях.</p>
-                    </div>
+                <div class="col-md-6 h-100">
+                    <a th:href="@{/vouchers}" class="tooltip-bubble text-decoration-none text-dark"
+                       data-tooltip="Цъкни тук, за да управляваш ваучери">
+                        <div class="module-card d-flex flex-column justify-content-between h-100">
+                            <h4><i class="fas fa-ticket-alt me-2"></i>Vouchers</h4>
+                            <p>Управление на всички ваучери. Поддържа статус, импортиране, изтичане и награди.</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-md-6">
-                    <div class="module-card">
-                        <h4><i class="fas fa-gift me-2"></i>Rewards</h4>
-                        <p>Награди, приложими към куестове или ваучери. Могат да бъдат дигитални, физически или
-                            в-гейм.</p>
-                    </div>
+                <div class="col-md-6 h-100">
+                    <a th:href="@{/rewards}" class="tooltip-bubble text-decoration-none text-dark"
+                       data-tooltip="Цъкни тук, за да управляваш награди">
+                        <div class="module-card d-flex flex-column justify-content-between h-100">
+                            <h4><i class="fas fa-gift me-2"></i>Rewards</h4>
+                            <p>Награди за куестове или ваучери – дигитални, физически или в-гейм.</p>
+                        </div>
+                    </a>
                 </div>
-                <div class="col-md-6">
-                    <div class="module-card">
-                        <h4><i class="fas fa-plug me-2"></i>Integrations</h4>
-                        <p>Свързване с външни платформи като Discord, Steam, YouTube и др. Извличане на данни и
-                            статистики.</p>
-                    </div>
+                <div class="col-md-6 h-100">
+                    <a th:href="@{/integrations}" class="tooltip-bubble text-decoration-none text-dark"
+                       data-tooltip="Цъкни тук, за да управляваш интеграции">
+                        <div class="module-card d-flex flex-column justify-content-between h-100">
+                            <h4><i class="fas fa-plug me-2"></i>Integrations</h4>
+                            <p>Свързване с Discord, Steam, YouTube и други. Извличане на статистики.</p>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 </body>
 </html>

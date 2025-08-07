@@ -1,22 +1,78 @@
 .module-card {
     background-color: #F8F9FA;
     border: 1px solid #dee2e6;
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 1.5rem;
     height: 100%;
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease-in-out;
+    min-height: 140px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
 }
 
 .module-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    border-color: #F2168F;
 }
 
+/* Заглавие в картата */
 .module-card h4 {
     color: #F2168F;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
+/* Tooltip стил */
+.tooltip-bubble {
+    position: relative;
+    display: block;
+}
+
+.tooltip-bubble::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    top: -42px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.95);
+    background-color: #343a40;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease-in-out;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.tooltip-bubble::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: #343a40;
+    opacity: 0;
+    transition: all 0.25s ease-in-out;
+}
+
+.tooltip-bubble:hover::after,
+.tooltip-bubble:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-4px);
+}
+
+/* Профилна визитка */
 .profile-inline {
     display: flex;
     align-items: center;

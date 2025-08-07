@@ -30,9 +30,31 @@
                 </div>
             </div>
 
+            <!-- Статистика -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <div class="module-card text-center">
+                        <h4><i class="fas fa-check-circle me-2"></i>Активни куестове</h4>
+                        <p>42</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="module-card text-center">
+                        <h4><i class="fas fa-calendar-alt me-2"></i>Календар</h4>
+                        <p>Добавени нови куестове: 12 Авг, 18 Авг, 25 Авг</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="module-card text-center">
+                        <h4><i class="fas fa-history me-2"></i>Последна активност</h4>
+                        <p>Последно добавен куест: "Spring Boot Basics" (преди 3 часа)</p>
+                    </div>
+                </div>
+            </div>
+
             <!-- Модули -->
             <div class="row g-4 align-items-stretch">
-                <div class="col-md-6 h-100">
+                <div class="col-md-6">
                     <a th:href="@{/quests}" class="tooltip-bubble text-decoration-none text-dark"
                        data-tooltip="Цъкни тук, за да управляваш куестове">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
@@ -41,7 +63,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 h-100">
+                <div class="col-md-6">
                     <a th:href="@{/vouchers}" class="tooltip-bubble text-decoration-none text-dark"
                        data-tooltip="Цъкни тук, за да управляваш ваучери">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
@@ -50,7 +72,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 h-100">
+                <div class="col-md-6">
                     <a th:href="@{/rewards}" class="tooltip-bubble text-decoration-none text-dark"
                        data-tooltip="Цъкни тук, за да управляваш награди">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
@@ -59,7 +81,7 @@
                         </div>
                     </a>
                 </div>
-                <div class="col-md-6 h-100">
+                <div class="col-md-6">
                     <a th:href="@{/integrations}" class="tooltip-bubble text-decoration-none text-dark"
                        data-tooltip="Цъкни тук, за да управляваш интеграции">
                         <div class="module-card d-flex flex-column justify-content-between h-100">

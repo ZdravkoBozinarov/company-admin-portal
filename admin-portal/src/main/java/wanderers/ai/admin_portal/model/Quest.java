@@ -1,20 +1,31 @@
 package wanderers.ai.admin_portal.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "quests")
 public class Quest {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
+    private String subtitle;
+    private String description;
     private String category;
     private boolean enabled;
     private boolean hidden;
+
     private LocalDateTime notBefore;
     private LocalDateTime expiry;
+
+    private String template;
+
+    @Column(columnDefinition = "TEXT")
+    private String data;
 
     public Quest() {
     }

@@ -1,10 +1,14 @@
 package wanderers.ai.admin_portal.model;
 
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+
 import java.time.LocalDateTime;
 
+@Entity
 public class Quest {
+
     private Long id;
+
     private String name;
     private String category;
     private boolean enabled;
@@ -12,16 +16,10 @@ public class Quest {
     private LocalDateTime notBefore;
     private LocalDateTime expiry;
 
-    public Quest(Long id, String name, String category, boolean enabled, boolean hidden, LocalDateTime notBefore, LocalDateTime expiry) {
-        this.id = id;
-        this.name = name;
-        this.category = category;
-        this.enabled = enabled;
-        this.hidden = hidden;
-        this.notBefore = notBefore;
-        this.expiry = expiry;
+    public Quest() {
     }
 
+    //Getters
     public Long getId() {
         return id;
     }
@@ -48,5 +46,10 @@ public class Quest {
 
     public LocalDateTime getExpiry() {
         return expiry;
+    }
+
+    //Setters
+    public void setName(String name) {
+        this.name = name;
     }
 }

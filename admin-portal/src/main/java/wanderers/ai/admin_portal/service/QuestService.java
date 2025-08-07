@@ -1,19 +1,37 @@
 package wanderers.ai.admin_portal.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import wanderers.ai.admin_portal.model.Quest;
+import wanderers.ai.admin_portal.repository.QuestRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class QuestService {
 
-    public List<Quest> getMockedQuests() {
-        return List.of(
-                new Quest(1L, "Connect X to Profile", "social", true, false, LocalDateTime.now().minusDays(1), null),
-                new Quest(2L, "Bio Completer", "creator", true, false, LocalDateTime.now(), null),
-                new Quest(3L, "Unlock Bow", "gamer", true, false, null, LocalDateTime.now().plusDays(5))
-        );
+    @Autowired
+    private QuestRepository questRepository;
+
+    public List<Quest> findAll() {
+        return questRepository.findAll();
+    }
+
+    public void save(Quest quest) {
+        questRepository.save(quest);
+    }
+
+    public Quest findById(Long id) {
+        return questRepository.findById(id).orElse(null);
+    }
+
+    public void update(Long id, Quest updatedQuest) {
+        Quest quest = findById(id);
+        if (quest == null) return;
+        // тук копирай нужните полета
+        quest.setName(updatedQuest.getName());
+        // ...
+        questRepository.save(quest);
     }
 }
+

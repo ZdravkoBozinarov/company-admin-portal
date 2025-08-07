@@ -1,39 +1,49 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" th:replace="layout :: *">
 <section>
-    <div class="d-flex justify-content-between align-items-center mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>🎯 Quests</h2>
         <a th:href="@{/quests/create}" class="btn btn-success">
             <i class="fas fa-plus"></i> Нов куест
         </a>
     </div>
 
-    <table class="table table-striped table-hover shadow-sm">
+    <table class="table table-bordered table-hover shadow-sm">
         <thead class="table-dark">
         <tr>
             <th>#</th>
             <th>Име</th>
-            <th>Тип</th>
+            <th>Категория</th>
+            <th>Статус</th>
+            <th>Покажи</th>
             <th>Начало</th>
             <th>Край</th>
-            <th>Активен</th>
             <th>Действия</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="quest, iStat : ${quests}">
-            <td th:text="${iStat.index + 1}"></td>
-            <td th:text="${quest.name}">Quest name</td>
-            <td th:text="${quest.type}">Type</td>
-            <td th:text="${quest.startDate}">2025-08-01</td>
-            <td th:text="${quest.endDate}">2025-09-01</td>
+        <tr th:each="quest, stat : ${quests}">
+            <td th:text="${quest.id}">1</td>
             <td>
-                    <span th:text="${quest.active ? 'Да' : 'Не'}"
-                          th:classappend="${quest.active} ? 'text-success' : 'text-danger'"></span>
+                <b th:text="${quest.name}">Quest Name</b><br/>
+                <small class="text-muted" th:text="${quest.subtitle}">Subtitle</small>
+            </td>
+            <td th:text="${quest.category}">gamer</td>
+            <td>
+                    <span th:text="${quest.enabled ? 'Активен' : 'Деактивиран'}"
+                          th:classappend="${quest.enabled} ? 'text-success fw-bold' : 'text-danger fw-bold'">
+                    </span>
             </td>
             <td>
-                <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
+                    <span th:text="${quest.hidden ? 'Скрит' : 'Виден'}"
+                          th:classappend="${quest.hidden} ? 'text-warning' : 'text-primary'">
+                    </span>
+            </td>
+            <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd') : '-'}">-</td>
+            <td th:text="${quest.expiry != null ? #temporals.format(quest.expiry, 'yyyy-MM-dd') : '-'}">-</td>
+            <td>
+                <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-outline-primary"><i class="fas fa-edit"></i></a>
+                <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         </tr>
         </tbody>

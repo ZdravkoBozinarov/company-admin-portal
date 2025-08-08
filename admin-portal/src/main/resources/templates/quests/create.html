@@ -98,6 +98,17 @@
                     <input type="datetime-local" class="form-control" name="dtstart">
                 </div>
 
+                <div class="mb-3">
+                    <label class="form-label">Choose a Quest Preset</label>
+                    <select id="templatePreset" class="form-select">
+                        <option value="">-- Select a Preset --</option>
+                        <option value="has_weapon">Has Weapon</option>
+                        <option value="has_ram">Has RAM</option>
+                        <option value="has_signal">Has Signal</option>
+                        <option value="passthrough">Passthrough</option>
+                    </select>
+                </div>
+
                 <!-- Template / Data -->
                 <div class="mb-3">
                     <label class="form-label">Template</label>
@@ -119,5 +130,6 @@
         </div>
     </div>
 </div>
+<script th:src="@{/js/quest-form.js}"></script>
 </body>
 </html>

@@ -71,9 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return isNaN(date) ? "-" : date.toISOString();
         };
 
-        document.getElementById("previewName").textContent = get("name");
-        document.getElementById("previewSubtitle").textContent = get("subtitle");
-        document.getElementById("previewDescription").textContent = get("description");
+        const fallback = (val, placeholder) =>
+            val && val.trim() !== "" && val !== "-" ? val : placeholder;
+
+
+        document.getElementById("previewName").textContent = fallback(get("name"), "Quest Name");
+        document.getElementById("previewSubtitle").textContent = fallback(get("subtitle"), "Quest Subtitle");
+        document.getElementById("previewDescription").textContent = fallback(get("description"), "Quest Description");
         document.getElementById("previewCategory").textContent = get("category");
         document.getElementById("previewEnabled").textContent = document.getElementById("enabled")?.checked ? "Enabled" : "Disabled";
         document.getElementById("previewHidden").textContent = document.getElementById("hidden")?.checked ? "Yes" : "No";

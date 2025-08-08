@@ -16,7 +16,12 @@
             <div class="row">
                 <!-- 🟩 Лява колона: формата -->
                 <div class="col-md-7">
-                    <h2 class="mb-4 text-primary"><i class="fas fa-plus-circle me-2"></i>Create New Quest</h2>
+                    <div class="d-flex align-items-center mb-4">
+                        <button class="btn btn-outline-secondary me-3" onclick="history.back()">
+                            <i class="fas fa-arrow-left me-1"></i> Back
+                        </button>
+                        <h2 class="text-primary mb-0"><i class="fas fa-plus-circle me-2"></i>Create New Quest</h2>
+                    </div>
 
                     <form th:action="@{/quests/create}" method="post">
                         <!-- ... всички input-и и div-ове от формата тук ... -->
@@ -127,7 +132,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label" id="data">Data (JSON)</label>
+                                <label class="form-label" for="data">Data (JSON)</label>
                                 <textarea class="form-control" name="data" rows="3"
                                           placeholder='{"weapon": [7]}' id="data"></textarea>
                             </div>

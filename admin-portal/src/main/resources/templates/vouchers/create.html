@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head">
+    <link rel="stylesheet" th:href="@{/css/createVoucher.css}"/>
+</head>
+<body>
+<div th:replace="layout :: layout">
+    <div th:fragment="content">
+        <h1 class="page-title">Create Voucher</h1>
+
+        <form th:action="@{/vouchers}" th:object="${voucher}" method="post" class="form-voucher">
+            <div class="form-group">
+                <label for="extId">External ID</label>
+                <input type="text" id="extId" th:field="*{extId}" required/>
+            </div>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" id="name" th:field="*{name}" required/>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" th:field="*{description}"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tag">Tag</label>
+                <input type="text" id="tag" th:field="*{tag}" required/>
+            </div>
+            <div class="form-group">
+                <label for="notBefore">Valid From</label>
+                <input type="datetime-local" id="notBefore" th:field="*{notBefore}"/>
+            </div>
+            <div class="form-group">
+                <label for="expiry">Expiry</label>
+                <input type="datetime-local" id="expiry" th:field="*{expiry}"/>
+            </div>
+            <div class="form-group">
+                <label for="maxUses">Max Uses</label>
+                <input type="number" id="maxUses" th:field="*{maxUses}" min="1"/>
+            </div>
+            <button type="submit" class="btn">Save Voucher</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

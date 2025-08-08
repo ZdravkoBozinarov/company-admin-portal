@@ -8,10 +8,12 @@
 <body>
 <div th:fragment="layout" style="display: flex; min-height: 100vh;">
     <div class="sidebar" th:insert="fragments/sidebar :: sidebar"></div>
-    <div class="main-content">
-        <div th:insert="~{::content}"></div>
+    <div class="main-content w-100">
+        <div class="d-flex justify-content-start ps-5">
+            <div th:insert="~{::content}" class="content-align-box"></div>
+        </div>
     </div>
-</div>
 
+</div>
 </body>
 </html>

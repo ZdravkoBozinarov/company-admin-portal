@@ -19,6 +19,12 @@
     border-color: #F2168F;
 }
 
+.content-align-box {
+    max-width: 1400px;
+    width: 100%;
+    margin-left: 20px; /* финна настройка */
+}
+
 /* Заглавие в картата */
 .module-card h4 {
     color: #F2168F;

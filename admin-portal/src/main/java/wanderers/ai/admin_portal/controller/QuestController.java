@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import wanderers.ai.admin_portal.model.Quest;
 import wanderers.ai.admin_portal.service.QuestService;
 
-import java.util.List;
 
 @Controller
 public class QuestController {

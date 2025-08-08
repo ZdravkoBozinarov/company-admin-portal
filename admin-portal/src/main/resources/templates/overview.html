@@ -18,8 +18,8 @@
                         <img alt="Logo" height="60" th:src="@{/images/wanderers-black.png}">
                     </a>
                     <div>
-                        <h1 class="mb-1" style="color: #F2168F;">Добре дошъл в <strong>Admin Portal</strong></h1>
-                        <p class="text-muted">Управление на игрови модули, куестове, ваучери, награди и интеграции.</p>
+                        <h1 class="mb-1" style="color: #F2168F;">Welcome to <strong>Admin Portal</strong></h1>
+                        <p class="text-muted">Voucher and Quest Creation, reward attachment and statistics tracker.</p>
                     </div>
                 </div>
 
@@ -36,37 +36,37 @@
             <div class="row g-4 align-items-stretch">
                 <div class="col-md-6">
                     <a th:href="@{/quests}" class="tooltip-bubble text-decoration-none text-dark"
-                       data-tooltip="Цъкни тук, за да управляваш куестове">
+                       data-tooltip="Click here, to edit quests.">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
                             <h4><i class="fas fa-bullseye me-2"></i>Quests</h4>
-                            <p>Създавай, редактирай и управлявай куестове. Поддържа категории, видимост и срокове.</p>
+                            <p>Create, edit and control quests.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <a th:href="@{/vouchers}" class="tooltip-bubble text-decoration-none text-dark"
-                       data-tooltip="Цъкни тук, за да управляваш ваучери">
+                       data-tooltip="Click here, to edit vouchers.">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
                             <h4><i class="fas fa-ticket-alt me-2"></i>Vouchers</h4>
-                            <p>Управление на всички ваучери. Поддържа статус, импортиране, изтичане и награди.</p>
+                            <p>Voucher Control and Creation.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <a th:href="@{/rewards}" class="tooltip-bubble text-decoration-none text-dark"
-                       data-tooltip="Цъкни тук, за да управляваш награди">
+                       data-tooltip="Click here, to attach rewards.">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
                             <h4><i class="fas fa-gift me-2"></i>Rewards</h4>
-                            <p>Награди за куестове или ваучери – дигитални, физически или в-гейм.</p>
+                            <p>Attach rewards for quests and vouchers all in one place.</p>
                         </div>
                     </a>
                 </div>
                 <div class="col-md-6">
                     <a th:href="@{/integrations}" class="tooltip-bubble text-decoration-none text-dark"
-                       data-tooltip="Цъкни тук, за да управляваш интеграции">
+                       data-tooltip="Click here, to manage integrations">
                         <div class="module-card d-flex flex-column justify-content-between h-100">
                             <h4><i class="fas fa-plug me-2"></i>Integrations</h4>
-                            <p>Свързване с Discord, Steam, YouTube и други. Извличане на статистики.</p>
+                            <p>Discord, Steam and YouTube Statistics.</p>
                         </div>
                     </a>
                 </div>
@@ -75,20 +75,22 @@
                 <div class="row g-4 mb-4 justify-content-center">
                     <div class="col-auto" style="max-width: 260px;">
                         <div class="module-card text-center">
-                            <h4><i class="fas fa-check-circle me-2"></i>Активни куестове</h4>
-                            <p>42</p>
+                            <h4><i class="fas fa-check-circle me-2"></i>Active Quests</h4>
+                            <p>{activeQuests}</p>
                         </div>
                     </div>
                     <div class="col-auto" style="max-width: 260px;">
                         <div class="module-card text-center">
-                            <h4><i class="fas fa-calendar-alt me-2"></i>Календар</h4>
-                            <p>Добавени нови куестове: 12 Авг, 18 Авг, 25 Авг</p>
+                            <h4><i class="fas fa-calendar-alt me-2"></i>Calendar</h4>
+                            <p>New Quest's added: {date}</p>
                         </div>
                     </div>
                     <div class="col-auto" style="max-width: 260px;">
                         <div class="module-card text-center">
-                            <h4><i class="fas fa-history me-2"></i>Последна активност</h4>
-                            <p>Последно добавен куест: "Spring Boot" (преди 3 часа)</p>
+                            <h4><i class="fas fa-history me-2"></i>Panel Activity</h4>
+                            <p>{lastChange}</p>
+                            <p>{lastChange}</p>
+                            <p>{lastChange}</p>
                         </div>
                     </div>
                 </div>

@@ -4,15 +4,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const dtstartWrapper = document.getElementById("dtstartWrapper");
     const notBeforeInput = document.querySelector('[name="not_before"]');
 
-    // Smart preset logic
+    // Autofill not_before with current date-time
+    if (notBeforeInput) {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // fix timezone
+        notBeforeInput.value = now.toISOString().slice(0, 16);
+    }
+
+    // Show/hide dtstart dynamically
+    function toggleDtstartVisibility() {
+        if (!dtstartWrapper) return;
+        dtstartWrapper.style.display = rruleInput.value.trim() ? "block" : "none";
+    }
+
+    if (rruleInput) {
+        toggleDtstartVisibility(); // initial
+        rruleInput.addEventListener("input", toggleDtstartVisibility);
+    }
+
+    // Smart Presets
     if (presetSelect) {
         presetSelect.addEventListener("change", function () {
             const template = this.value;
-
             const dataField = document.querySelector('[name="data"]');
             const categoryField = document.querySelector('[name="category"]');
             const templateField = document.querySelector('[name="template"]');
-
             if (!dataField || !categoryField || !templateField) return;
 
             switch (template) {
@@ -41,75 +57,59 @@ document.addEventListener("DOMContentLoaded", () => {
                     dataField.value = "";
                     categoryField.value = "";
             }
+
+            updatePreview(); // Обнови Live Preview веднага
         });
     }
 
-    // Autofill not_before with current date-time
-    if (notBeforeInput) {
-        const now = new Date();
-        now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); // fix timezone
-        notBeforeInput.value = now.toISOString().slice(0, 16);
+    // Live Preview функция
+    function updatePreview() {
+        const get = id => document.getElementById(id)?.value || "-";
+
+        const formatDateISO = val => {
+            const date = new Date(val);
+            return isNaN(date) ? "-" : date.toISOString();
+        };
+
+        document.getElementById("previewName").textContent = get("name");
+        document.getElementById("previewSubtitle").textContent = get("subtitle");
+        document.getElementById("previewDescription").textContent = get("description");
+        document.getElementById("previewCategory").textContent = get("category");
+        document.getElementById("previewEnabled").textContent = document.getElementById("enabled")?.checked ? "Enabled" : "Disabled";
+        document.getElementById("previewHidden").textContent = document.getElementById("hidden")?.checked ? "Yes" : "No";
+        document.getElementById("previewCooldown").textContent = get("check_cooldown");
+        document.getElementById("previewCompletions").textContent = get("max_completions");
+        document.getElementById("previewStart").textContent = formatDateISO(get("not_before"));
+        document.getElementById("previewEnd").textContent = formatDateISO(get("expiry"));
+        document.getElementById("previewDtstart").textContent = formatDateISO(get("dtstart"));
+        document.getElementById("previewRrule").textContent = get("rrule");
+        document.getElementById("previewTemplate").textContent = get("template");
+
+        let rawData = get("data");
+        try {
+          const data = JSON.parse(rawData);
+          document.getElementById("previewData").textContent = JSON.stringify(data, null, 2);
+        } catch (e) {
+          document.getElementById("previewData").textContent = rawData.trim() === "" ? "{}" : "Invalid JSON";
+        }
     }
 
-    // Show/hide dtstart dynamically
-    function toggleDtstartVisibility() {
-        if (!dtstartWrapper) return;
-        dtstartWrapper.style.display = rruleInput.value.trim() ? "block" : "none";
-    }
-
-    if (rruleInput) {
-        toggleDtstartVisibility(); // initial
-        rruleInput.addEventListener("input", toggleDtstartVisibility);
-    }
-});
-
-function updatePreview() {
-    const val = (name) => document.querySelector(`[name="${name}"]`)?.value || "";
-    const bool = (name) => document.querySelector(`[name="${name}"]`)?.checked;
-
-    document.getElementById("previewName").textContent = val("name") || "Quest Name";
-    document.getElementById("previewSubtitle").textContent = val("subtitle") || "Subtitle";
-    document.getElementById("previewDescription").textContent = val("description") || "Description will appear here.";
-
-    document.getElementById("previewCategory").textContent = val("category") || "-";
-    document.getElementById("previewStatus").textContent = bool("enabled") ? "Enabled" : "Disabled";
-    document.getElementById("previewHidden").textContent = bool("hidden") ? "Yes" : "No";
-    document.getElementById("previewCooldown").textContent = val("check_cooldown") || "10";
-    document.getElementById("previewMax").textContent = val("max_completition") || "1";
-    document.getElementById("previewStart").textContent = formatDate(val("not_before")) || "-";
-    document.getElementById("previewEnd").textContent = formatDate(val("expiry")) || "-";
-    document.getElementById("previewRrule").textContent = val("rrule") || "-";
-    document.getElementById("previewDtstart").textContent = formatDate(val("dtstart")) || "-";
-    document.getElementById("previewTemplate").textContent = val("template") || "-";
-    document.getElementById("previewData").textContent = val("data") || "{}";
-}
-
-
-function formatDate(datetimeLocal) {
-    try {
-        const date = new Date(datetimeLocal);
-        return date.toLocaleString(undefined, {
-            year: 'numeric', month: 'short', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
-        });
-    } catch (e) {
-        return datetimeLocal;
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    // ... (всичко от преди остава)
-
-    // Live preview triggers
-    const fields = ["name", "subtitle", "description", "template", "enabled", "not_before", "expiry"];
-    fields.forEach(f => {
-        const el = document.querySelector(`[name="${f}"]`);
+    // Attach listeners
+    [
+        "name", "subtitle", "description", "category", "check_cooldown", "max_completition",
+        "not_before", "expiry", "rrule", "dtstart", "template", "data"
+    ].forEach(id => {
+        const el = document.getElementById(id);
         if (el) {
             el.addEventListener("input", updatePreview);
             el.addEventListener("change", updatePreview);
         }
     });
 
-    updatePreview(); // Инициален рендер
-});
+    ["enabled", "hidden"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener("change", updatePreview);
+    });
 
+    updatePreview(); // Начално извикване
+});

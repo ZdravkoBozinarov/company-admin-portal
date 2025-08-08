@@ -25,31 +25,32 @@
                             <!-- Name / Subtitle -->
                             <div class="mb-3">
                                 <label class="form-label">Name *</label>
-                                <input type="text" class="form-control" name="name" required>
+                                <input type="text" class="form-control" name="name" id="name" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Subtitle</label>
-                                <input type="text" class="form-control" name="subtitle">
+                                <input type="text" class="form-control" name="subtitle" id="subtitle">
                             </div>
 
                             <!-- Description -->
                             <div class="mb-3">
                                 <label class="form-label">Description *</label>
-                                <textarea class="form-control" name="description" rows="4" required></textarea>
+                                <textarea class="form-control" name="description" rows="4" id="description"
+                                          required></textarea>
                             </div>
 
                             <!-- Banner Image -->
                             <div class="mb-3">
                                 <label class="form-label">Banner Image (Optional)</label>
-                                <input type="text" class="form-control" name="banner_image"
+                                <input type="text" class="form-control" name="banner_image" id="banner_image"
                                        placeholder="e.g. 575d7753-d5f8-465e-a63c.png">
                             </div>
 
                             <!-- Category -->
                             <div class="mb-3">
                                 <label class="form-label">Category *</label>
-                                <select class="form-select" name="category" required>
+                                <select class="form-select" name="category" id="category" required>
                                     <option value="">-- Select Category --</option>
                                     <option value="gamer">Gamer</option>
                                     <option value="social">Social</option>
@@ -73,11 +74,13 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Check Cooldown</label>
-                                    <input type="number" class="form-control" name="check_cooldown" value="10">
+                                    <input type="number" class="form-control" name="check_cooldown" id="check_cooldown"
+                                           value="10">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Max Completions</label>
-                                    <input type="number" class="form-control" name="max_completions" value="1">
+                                    <label class="form-label">Max Completitions</label>
+                                    <input type="number" class="form-control" name="max_completion"
+                                           id="max_completions" value="1">
                                 </div>
                             </div>
 
@@ -85,11 +88,11 @@
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Not Before (start)</label>
-                                    <input type="datetime-local" class="form-control" name="not_before">
+                                    <input type="datetime-local" class="form-control" name="not_before" id="not_before">
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Expiry (end)</label>
-                                    <input type="datetime-local" class="form-control" name="expiry">
+                                    <input type="datetime-local" class="form-control" name="expiry" id="expiry">
                                 </div>
                             </div>
 
@@ -97,17 +100,17 @@
                             <div class="mb-3">
                                 <label class="form-label">RRule (Optional)</label>
                                 <input type="text" class="form-control" name="rrule"
-                                       placeholder="e.g. RRULE:FREQ=WEEKLY;WKST=MO">
+                                       id="rrule" placeholder="e.g. RRULE:FREQ=WEEKLY;WKST=MO">
                             </div>
 
                             <div class="mb-3" id="dtstartWrapper" style="display: none;">
                                 <label class="form-label">Dtstart (required if RRule)</label>
-                                <input type="datetime-local" class="form-control" name="dtstart">
+                                <input type="datetime-local" class="form-control" name="dtstart" id="dtstart">
                             </div>
 
 
                             <div class="mb-3">
-                                <label class="form-label">Choose a Quest Preset</label>
+                                <label class="form-label" for="template">Choose a Quest Preset</label>
                                 <select id="templatePreset" class="form-select">
                                     <option value="">-- Select a Preset --</option>
                                     <option value="has_weapon">Has Weapon</option>
@@ -120,13 +123,13 @@
                             <!-- Template / Data -->
                             <div class="mb-3">
                                 <label class="form-label">Template</label>
-                                <input type="text" class="form-control" name="template" placeholder="e.g. has_weapon">
+                                <input type="text" class="form-control" name="template" placeholder="e.g. has_weapon" id="template">
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Data (JSON)</label>
+                                <label class="form-label" id="data">Data (JSON)</label>
                                 <textarea class="form-control" name="data" rows="3"
-                                          placeholder='{"weapon": [7]}'></textarea>
+                                          placeholder='{"weapon": [7]}' id="data"></textarea>
                             </div>
 
                             <!-- Submit -->
@@ -136,12 +139,6 @@
                                 </button>
                             </div>
                         </form>
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success px-4">
-                                <i class="fas fa-save me-2"></i>Save Quest
-                            </button>
-                        </div>
-                    </form>
                 </div>
 
                 <!-- 🟦 Дясна колона: preview -->
@@ -154,10 +151,10 @@
 
                             <ul class="list-unstyled small">
                                 <li><b>Category:</b> <span id="previewCategory">-</span></li>
-                                <li><b>Status:</b> <span id="previewStatus">Disabled</span></li>
+                                <li><b>Status:</b> <span id="previewEnabled">Disabled</span></li>
                                 <li><b>Hidden:</b> <span id="previewHidden">No</span></li>
                                 <li><b>Check Cooldown:</b> <span id="previewCooldown">10</span></li>
-                                <li><b>Max Completions:</b> <span id="previewMax">1</span></li>
+                                <li><b>Max Completions:</b> <span id="previewCompletions">1</span></li>
                                 <li><b>Start:</b> <span id="previewStart">-</span></li>
                                 <li><b>End:</b> <span id="previewEnd">-</span></li>
                                 <li><b>RRule:</b> <span id="previewRrule">-</span></li>

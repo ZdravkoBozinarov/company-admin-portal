@@ -17,11 +17,6 @@ public class QuestController {
         this.questService = questService;
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "overview";
-    }
-
     @GetMapping("/quests")
     public String listQuests(Model model) {
         model.addAttribute("quests", questService.findAll());

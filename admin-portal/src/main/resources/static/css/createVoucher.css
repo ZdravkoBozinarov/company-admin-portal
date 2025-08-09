@@ -16,9 +16,8 @@ body{
   font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Noto Sans";
 }
 
-/* По-широк контейнер, за да има въздух за 2 колони */
 .form-wrapper{
-  max-width: 1200px;            /* ↑ от 980px */
+  max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
 }
@@ -55,7 +54,6 @@ body{
 label{ font-weight:650; color:var(--text); }
 .hint{ color:var(--muted); font-size:.9rem; }
 
-/* Инпути */
 input[type="text"],input[type="number"],input[type="datetime-local"],select,textarea{
   width:100%;
   padding:.7rem .85rem;
@@ -67,7 +65,6 @@ input[type="text"],input[type="number"],input[type="datetime-local"],select,text
 textarea{ min-height:120px; resize:vertical; }
 input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--brand-primary); box-shadow:0 0 0 .25rem var(--focus-ring); }
 
-/* Ред в цялата ширина */
 .col-span-2{ grid-column:span 1; }
 @media (min-width:900px){ .col-span-2{ grid-column:span 2; } }
 
@@ -76,7 +73,6 @@ input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--brand-
   padding:1.25rem; border-top:1px solid var(--border); background:#fff;
 }
 
-/* Бутони */
 .btn{ appearance:none; border:none; cursor:pointer; padding:.75rem 1.1rem; border-radius:10px; font-weight:700;
       transition:transform .02s, filter .15s, box-shadow .15s, background .2s; }
 .btn:active{ transform:translateY(1px); }
@@ -86,27 +82,24 @@ input:focus,select:focus,textarea:focus{ outline:none; border-color:var(--brand-
 .btn-ghost{ background:transparent; color:var(--brand-primary); }
 .btn-ghost:hover{ background:rgba(164,25,61,.08); }
 
-/* Input + действия в една линия */
 .input-with-actions{
   display:grid;
-  grid-template-columns:minmax(240px,1fr) auto;  /* по-широк първи стълб */
+  grid-template-columns:minmax(240px,1fr) auto;
   gap:.5rem; align-items:center;
 }
 .input-with-actions .actions{ display:flex; gap:.5rem; white-space:nowrap; }
-.input-with-actions input{ min-width:0; }        /* да не се свива „на нула“ в grid */
+.input-with-actions input{ min-width:0; }
 .input-with-actions .btn{ padding:.6rem .9rem; }
 
-/* ДВЕ КАРТИ РАМО ДО РАМО */
 .two-col{ display:grid; gap:1.5rem; grid-template-columns:1fr; }
 @media (min-width:1024px){
   .two-col{
-    grid-template-columns: 2fr 1fr;  /* форма | preview (по-тясно) */
+    grid-template-columns: 2fr 1fr;
     align-items:start;
   }
-  .two-col > .card{ min-width:0; }   /* важно за правилно свиване */
+  .two-col > .card{ min-width:0; }
 }
 
-/* По желание: закрепи Preview отдясно при скрол */
 @media (min-width:1024px){
   .preview-card{ position:sticky; top:1rem; }
 }

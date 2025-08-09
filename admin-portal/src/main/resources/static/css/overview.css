@@ -1,31 +1,16 @@
 .module-card {
-    background-color: #F8F9FA;
+    background-color: #fff;
     border: 1px solid #dee2e6;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1.5rem;
-    height: 100%;
     min-height: 140px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    position: relative;
 }
 
-.module-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-    border-color: #F2168F;
-}
-
-.content-align-box {
-    max-width: 1400px;
-    width: 100%;
-    margin-left: 20px; /* финна настройка */
-}
-
-/* Заглавие в картата */
 .module-card h4 {
     color: #F2168F;
     font-size: 1.25rem;
@@ -33,14 +18,35 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    transition: color 0.3s ease;
 }
 
-/* Tooltip стил */
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: #F2168F;
+}
+.module-card:hover h4 {
+    color: #c51172;
+}
+
+.module-card p {
+    margin: 0;
+    color: #555;
+}
+
+.module-card:hover i {
+    animation: pulse 0.6s ease-in-out;
+}
+@keyframes pulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
 .tooltip-bubble {
     position: relative;
     display: block;
 }
-
 .tooltip-bubble::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -57,9 +63,8 @@
     pointer-events: none;
     transition: all 0.25s ease-in-out;
     z-index: 10;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
-
 .tooltip-bubble::before {
     content: "";
     position: absolute;
@@ -71,20 +76,17 @@
     opacity: 0;
     transition: all 0.25s ease-in-out;
 }
-
 .tooltip-bubble:hover::after,
 .tooltip-bubble:hover::before {
     opacity: 1;
     transform: translateX(-50%) translateY(-4px);
 }
 
-/* Профилна визитка */
 .profile-inline {
     display: flex;
     align-items: center;
     gap: 1rem;
 }
-
 .profile-inline img {
     height: 56px;
     width: 56px;
@@ -92,35 +94,11 @@
     object-fit: cover;
     border: 2px solid #F2168F;
 }
-
-.profile-inline .info {
-    line-height: 1.2;
-}
-
 .profile-inline .info h6 {
     margin: 0;
     font-weight: 600;
     color: #F2168F;
 }
-
 .profile-inline .info small {
     color: #666;
 }
-
-
-// Статистики
-/* По-малки карти за статистика */
-.mini-card {
-    padding: 1rem;
-    min-height: 200px;
-    font-size: 0.9rem;
-}
-
-.mini-card h4 {
-    font-size: 1.1rem;
-}
-
-.mini-card p {
-    font-size: 0.95rem;
-}
-

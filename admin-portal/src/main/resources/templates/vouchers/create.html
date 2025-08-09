@@ -10,10 +10,8 @@
     <div th:fragment="content">
         <div class="form-wrapper">
 
-            <!-- ДВЕ СИБЛИНГ КАРТИ РАМО ДО РАМО -->
             <div class="two-col">
 
-                <!-- КАРТА: CREATE VOUCHER -->
                 <div class="card">
                     <div class="card-header">
                         <h1 class="title">Create Voucher</h1>
@@ -25,7 +23,6 @@
                     <form id="voucherForm" th:action="@{/vouchers}" th:object="${voucher}" method="post" novalidate>
                         <div class="card-body">
                             <div class="grid">
-                                <!-- External ID -->
                                 <div class="form-group">
                                     <label for="extId" class="required">External ID (given to customers)</label>
                                     <div class="input-with-actions">
@@ -56,7 +53,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Name -->
                                 <div class="form-group">
                                     <label for="name" class="required">Internal Name</label>
                                     <input type="text" id="name" th:field="*{name}"
@@ -64,21 +60,18 @@
                                     <div class="hint">Human‑friendly internal title.</div>
                                 </div>
 
-                                <!-- Description -->
                                 <div class="form-group col-span-2">
                                     <label for="description">Description (internal)</label>
                                     <textarea id="description" th:field="*{description}"
                                               placeholder="Keep it consistent with existing vouchers"></textarea>
                                 </div>
 
-                                <!-- Tag -->
                                 <div class="form-group">
                                     <label for="tag" class="required">Tag</label>
                                     <input type="text" id="tag" th:field="*{tag}" placeholder="game_night" required/>
                                     <div class="hint">Use <code>game_night</code>.</div>
                                 </div>
 
-                                <!-- Epoch fields -->
                                 <div class="form-group">
                                     <label for="notBefore" class="required">Valid From (epoch seconds)</label>
                                     <input type="number" id="notBefore" th:field="*{notBefore}" min="0" step="1"
@@ -99,7 +92,6 @@
                                     <input type="datetime-local" id="expiryHelper"/>
                                 </div>
 
-                                <!-- Validation -->
                                 <div class="form-group col-span-2" id="rangeWarn" style="display:none;">
                                     <div class="warn">Expiry must be after or equal to “Valid From”.</div>
                                 </div>
@@ -113,10 +105,9 @@
                     </form>
                 </div>
 
-                <!-- КАРТА: PREVIEW (ОТДЕЛЕН SIBLING) -->
                 <div class="card preview-card">
                     <div class="card-header"><h2 class="title">Preview</h2></div>
-                    <div class="card-sub">#a4193d / #ffdfb9 theme</div>
+                    <div class="card-sub">Voucher Information</div>
                     <div class="card-body">
                         <p><strong>ext_id:</strong> <span id="pv-ext">—</span></p>
                         <p><strong>name:</strong> <span id="pv-name">—</span></p>
@@ -127,9 +118,9 @@
                     </div>
                 </div>
 
-            </div><!-- /.two-col -->
+            </div>
 
-        </div><!-- /.form-wrapper -->
+        </div>
     </div>
 </div>
 

@@ -1,45 +1,138 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head">
+<head th:replace="~{layout :: head}">
     <link rel="stylesheet" th:href="@{/css/createVoucher.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Create Voucher</title>
 </head>
 <body>
-<div th:replace="layout :: layout">
+<div th:replace="~{layout :: layout}">
     <div th:fragment="content">
-        <h1 class="page-title">Create Voucher</h1>
+        <div class="form-wrapper">
 
-        <form th:action="@{/vouchers}" th:object="${voucher}" method="post" class="form-voucher">
-            <div class="form-group">
-                <label for="extId">External ID</label>
-                <input type="text" id="extId" th:field="*{extId}" required/>
-            </div>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" th:field="*{name}" required/>
-            </div>
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" th:field="*{description}"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="tag">Tag</label>
-                <input type="text" id="tag" th:field="*{tag}" required/>
-            </div>
-            <div class="form-group">
-                <label for="notBefore">Valid From</label>
-                <input type="datetime-local" id="notBefore" th:field="*{notBefore}"/>
-            </div>
-            <div class="form-group">
-                <label for="expiry">Expiry</label>
-                <input type="datetime-local" id="expiry" th:field="*{expiry}"/>
-            </div>
-            <div class="form-group">
-                <label for="maxUses">Max Uses</label>
-                <input type="number" id="maxUses" th:field="*{maxUses}" min="1"/>
-            </div>
-            <button type="submit" class="btn">Save Voucher</button>
-        </form>
+            <!-- ДВЕ СИБЛИНГ КАРТИ РАМО ДО РАМО -->
+            <div class="two-col">
+
+                <!-- КАРТА: CREATE VOUCHER -->
+                <div class="card">
+                    <div class="card-header">
+                        <h1 class="title">Create Voucher</h1>
+                    </div>
+                    <div class="card-sub">
+                        Fill in voucher details. <strong>ID is auto‑generated.</strong>
+                    </div>
+
+                    <form id="voucherForm" th:action="@{/vouchers}" th:object="${voucher}" method="post" novalidate>
+                        <div class="card-body">
+                            <div class="grid">
+                                <!-- External ID -->
+                                <div class="form-group">
+                                    <label for="extId" class="required">External ID (given to customers)</label>
+                                    <div class="input-with-actions">
+                                        <input
+                                                type="text"
+                                                id="extId"
+                                                th:field="*{extId}"
+                                                placeholder="AUTO-GENERATED"
+                                                required
+                                                pattern="[A-Z]{16}"
+                                                minlength="16"
+                                                maxlength="16"
+                                                autocomplete="off"
+                                                inputmode="latin"
+                                                aria-describedby="extIdHelp"
+                                        />
+                                        <div class="actions">
+                                            <button type="button" class="btn btn-ghost" id="genExtId"
+                                                    title="Generate new ID">Generate
+                                            </button>
+                                            <button type="button" class="btn btn-ghost" id="copyExtId"
+                                                    title="Copy to clipboard">Copy
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="hint" id="extIdHelp">
+                                        Exactly 16 uppercase letters (A–Z). Generated automatically on load.
+                                    </div>
+                                </div>
+
+                                <!-- Name -->
+                                <div class="form-group">
+                                    <label for="name" class="required">Internal Name</label>
+                                    <input type="text" id="name" th:field="*{name}"
+                                           placeholder="What the voucher is for" required/>
+                                    <div class="hint">Human‑friendly internal title.</div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="form-group col-span-2">
+                                    <label for="description">Description (internal)</label>
+                                    <textarea id="description" th:field="*{description}"
+                                              placeholder="Keep it consistent with existing vouchers"></textarea>
+                                </div>
+
+                                <!-- Tag -->
+                                <div class="form-group">
+                                    <label for="tag" class="required">Tag</label>
+                                    <input type="text" id="tag" th:field="*{tag}" placeholder="game_night" required/>
+                                    <div class="hint">Use <code>game_night</code>.</div>
+                                </div>
+
+                                <!-- Epoch fields -->
+                                <div class="form-group">
+                                    <label for="notBefore" class="required">Valid From (epoch seconds)</label>
+                                    <input type="number" id="notBefore" th:field="*{notBefore}" min="0" step="1"
+                                           placeholder="e.g. 1754726400" required/>
+                                    <div class="hint">When the voucher begins (Unix time, seconds).</div>
+                                    <div class="hint"><small><strong>Helper:</strong> pick date/time → auto‑fills epoch</small>
+                                    </div>
+                                    <input type="datetime-local" id="notBeforeHelper"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="expiry" class="required">Expiry (epoch seconds)</label>
+                                    <input type="number" id="expiry" th:field="*{expiry}" min="0" step="1"
+                                           placeholder="e.g. 1754910000" required/>
+                                    <div class="hint">When the voucher expires (Unix time, seconds).</div>
+                                    <div class="hint"><small><strong>Helper:</strong> pick date/time → auto‑fills epoch</small>
+                                    </div>
+                                    <input type="datetime-local" id="expiryHelper"/>
+                                </div>
+
+                                <!-- Validation -->
+                                <div class="form-group col-span-2" id="rangeWarn" style="display:none;">
+                                    <div class="warn">Expiry must be after or equal to “Valid From”.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a th:href="@{/vouchers}" class="btn btn-ghost">Cancel</a>
+                            <button type="submit" class="btn btn-primary" id="submitBtn">Save Voucher</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- КАРТА: PREVIEW (ОТДЕЛЕН SIBLING) -->
+                <div class="card preview-card">
+                    <div class="card-header"><h2 class="title">Preview</h2></div>
+                    <div class="card-sub">#a4193d / #ffdfb9 theme</div>
+                    <div class="card-body">
+                        <p><strong>ext_id:</strong> <span id="pv-ext">—</span></p>
+                        <p><strong>name:</strong> <span id="pv-name">—</span></p>
+                        <p><strong>description:</strong> <span id="pv-desc">—</span></p>
+                        <p><strong>tag:</strong> <span id="pv-tag">—</span></p>
+                        <p><strong>not_before (epoch):</strong> <span id="pv-nb">—</span></p>
+                        <p><strong>expiry (epoch):</strong> <span id="pv-exp">—</span></p>
+                    </div>
+                </div>
+
+            </div><!-- /.two-col -->
+
+        </div><!-- /.form-wrapper -->
     </div>
 </div>
+
+<script th:src="@{/js/createVoucher.js}"></script>
 </body>
 </html>

@@ -47,4 +47,5 @@ public class QuestController {
         questService.update(id, quest);
         return "redirect:/quests";
     }
+
 }

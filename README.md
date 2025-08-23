@@ -13,7 +13,7 @@ An internal web portal for managing game-related vouchers, user rewards, interac
 - Track claimed vs. unclaimed vouchers.
 - Attach rewards to specific vouchers.
 
-### ❓ Question Tool
+### ❓ Quest Tool
 - Create and manage questions (quizzes, polls, etc.).
 - Organize by type: multiple choice, boolean, text.
 - Attach questions to quests or campaigns.
@@ -58,8 +58,8 @@ An internal web portal for managing game-related vouchers, user rewards, interac
 - **Chart.js**
 - **JDA (Discord)**
 - **Steam Web API**
-- GitHub + GitHub Desktop
-- IntelliJ IDEA
+- **GitHub + GitHub Desktop**
+- **IntelliJ IDEA**
 
 ---
 
@@ -74,7 +74,6 @@ An internal web portal for managing game-related vouchers, user rewards, interac
 - Spring Security
 - Spring Boot DevTools
 - Validation
-- (Optional) OAuth2 Client
 
 ### 🛠️ Build & Run
 

@@ -1,77 +1,134 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Quests</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <!-- Bootstrap + FontAwesome -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Локални стилове -->
     <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/overview.css}">
-    <link rel="stylesheet" th:href="@{/css/quest.css}"> <!-- fine tuning the quest page -->
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
     <div th:fragment="content">
-        <div class="container py-5" style="max-width: 1000px;">
-            <div class="mx-auto">
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                    <h2><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
+        <div class="container-fluid py-4">
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col">
+                    <h2 class="h3 mb-0"><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
+                </div>
+                <div class="col-auto">
                     <a th:href="@{/quests/create}" class="btn btn-success">
-                        <i class="fas fa-plus"></i> New Quest
+                        <i class="fas fa-plus me-2"></i>New Quest
                     </a>
                 </div>
-
-                <table class="table table-bordered table-hover shadow-sm">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Status</th>
-                        <th>Visibility</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Data</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="quest : ${quests}">
-                        <td th:text="${quest.id}">1</td>
-                        <td>
-                            <b th:text="${quest.name}">Quest Name</b><br/>
-                            <small class="text-muted" th:text="${quest.subtitle}">Subtitle</small>
-                        </td>
-                        <td th:text="${quest.category}">gamer</td>
-                        <td>
-                        <span th:text="${quest.enabled ? 'Активен' : 'Деактивиран'}"
-                              th:classappend="${quest.enabled} ? 'text-success fw-bold' : 'text-danger fw-bold'"></span>
-                        </td>
-                        <td>
-                        <span th:text="${quest.hidden ? 'Скрит' : 'Виден'}"
-                              th:classappend="${quest.hidden} ? 'text-warning' : 'text-primary'"></span>
-                        </td>
-                        <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd') : '-'}">
-                            -
-                        </td>
-                        <td th:text="${quest.expiry != null ? #temporals.format(quest.expiry, 'yyyy-MM-dd') : '-'}">-
-                        </td>
-                        <td>
-                            <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-sm btn-outline-primary">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form class="row g-2 align-items-center mb-3" th:action="@{/quests}" method="get">
+                        <div class="col-sm-5 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" name="q" class="form-control" placeholder="Search by name or subtitle" th:value="${param.q}">
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-md-2">
+                            <select class="form-select" name="category" th:value="${param.category}">
+                                <option value="">All categories</option>
+                                <option th:each="c : ${categories}" th:value="${c}" th:text="${c}">Category</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 col-md-2">
+                            <select class="form-select" name="status" th:value="${param.status}">
+                                <option value="">Any status</option>
+                                <option value="enabled">Enabled</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-2 col-md-2 text-end">
+                            <button type="submit" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-filter me-2"></i>Filter
+                            </button>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle table-hover">
+                            <thead class="table-light">
+                            <tr>
+                                <th class="text-nowrap">#</th>
+                                <th>Name</th>
+                                <th class="text-nowrap">Category</th>
+                                <th class="text-nowrap">Status</th>
+                                <th class="text-nowrap">Visibility</th>
+                                <th class="text-nowrap">Start</th>
+                                <th class="text-nowrap">End</th>
+                                <th class="text-end text-nowrap">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="quest : ${quests}">
+                                <td th:text="${quest.id}">1</td>
+                                <td>
+                                    <div class="fw-semibold" th:text="${quest.name}">Quest Name</div>
+                                    <div class="text-muted small" th:text="${quest.subtitle}">Subtitle</div>
+                                </td>
+                                <td class="text-capitalize" th:text="${quest.category}">gamer</td>
+                                <td>
+                                    <span class="badge rounded-pill" th:text="${quest.enabled} ? 'Enabled' : 'Disabled'"
+                                          th:classappend="${quest.enabled} ? 'bg-success' : 'bg-danger'">Enabled</span>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill" th:text="${quest.hidden} ? 'Hidden' : 'Visible'"
+                                          th:classappend="${quest.hidden} ? 'bg-warning text-dark' : 'bg-primary'">Visible</span>
+                                </td>
+                                <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd''T''HH:mm:ss') : '-'}">-</td>
+                                <td th:text="${quest.expiry    != null ? #temporals.format(quest.expiry,    'yyyy-MM-dd''T''HH:mm:ss') : '-'}">-</td>
+                                <td class="text-end">
+                                    <div class="btn-group">
+                                        <a th:href="@{'/quests/edit/'   + ${quest.id}}" class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(quests)}">
+                                <td colspan="8" class="text-center text-muted py-4">
+                                    No quests found.
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3" th:if="${page != null}">
+                        <div class="small text-muted">
+                            <span th:text="${page.number + 1}">1</span>/<span th:text="${page.totalPages}">1</span>
+                            • <span th:text="${page.totalElements}">0</span> total
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               th:classappend="${page.first} ? ' disabled'"
+                               th:href="@{/quests(page=${page.number - 1}, q=${param.q}, category=${param.category}, status=${param.status})}">
+                                <i class="fas fa-chevron-left me-1"></i>Prev
+                            </a>
+                            <a class="btn btn-sm btn-outline-secondary"
+                               th:classappend="${page.last} ? ' disabled'"
+                               th:href="@{/quests(page=${page.number + 1}, q=${param.q}, category=${param.category}, status=${param.status})}">
+                                Next<i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

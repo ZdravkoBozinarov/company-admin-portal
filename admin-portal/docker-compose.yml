@@ -2,13 +2,14 @@ version: "3.9"
 
 services:
   postgres:
-    image: postgres:15
+    image: postgres:14
     container_name: quests-db
     restart: always
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: quests
+      TZ: Europe/Kyiv
     ports:
       - "5432:5432"
     volumes:
@@ -23,6 +24,7 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: admin
+      TZ: Europe/Kyiv
     ports:
       - "8081:80"
     depends_on:

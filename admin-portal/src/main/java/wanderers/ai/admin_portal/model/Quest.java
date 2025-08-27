@@ -1,13 +1,17 @@
 package wanderers.ai.admin_portal.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "quests")
+@Table(name = "quest")
 public class Quest {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -15,52 +19,21 @@ public class Quest {
     private String name;
     private String subtitle;
     private String description;
+    private String bannerImage;
     private String category;
     private boolean enabled;
-    private boolean hidden;
-
-    private LocalDateTime notBefore;
-    private LocalDateTime expiry;
-
+    private int checkCooldown;
+    private int maxCompletions;
+    private Instant createdAt;
+    private Instant notBefore;
+    private Instant expiry;
+    private String rrule;
+    private Instant dtstart;
     private String template;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "jsonb")
     private String data;
 
-    public Quest() {
-    }
-
-    //Getters
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public boolean isHidden() {
-        return hidden;
-    }
-
-    public LocalDateTime getNotBefore() {
-        return notBefore;
-    }
-
-    public LocalDateTime getExpiry() {
-        return expiry;
-    }
-
-    //Setters
-    public void setName(String name) {
-        this.name = name;
-    }
+    private boolean hidden;
 }
+

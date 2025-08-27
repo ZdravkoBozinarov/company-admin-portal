@@ -1,113 +1,113 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{layout :: head}">
-    <link rel="stylesheet" th:href="@{/css/createVoucher.css}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Create Voucher</title>
+    <!-- Keep only effects -->
+    <link rel="stylesheet" th:href="@{/css/createVoucher-effects.css}">
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
-    <div th:fragment="content">
-        <div class="form-wrapper">
+    <div th:fragment="content" class="container-fluid py-4">
 
-            <div class="two-col">
-
-                <div class="card">
-                    <div class="card-header">
-                        <h1 class="title">Create Voucher</h1>
+        <div class="row g-4">
+            <!-- Left: Form -->
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-primary text-white">
+                        <h1 class="h5 mb-0">Create Voucher</h1>
                     </div>
-                    <div class="card-sub">
-                        Fill in voucher details. <strong>ID is auto‑generated.</strong>
+                    <div class="card-subtitle bg-light px-3 py-2 border-bottom">
+                        Fill in voucher details. <strong>ID is auto-generated.</strong>
                     </div>
 
                     <form id="voucherForm" th:action="@{/vouchers}" th:object="${voucher}" method="post" novalidate>
                         <div class="card-body">
-                            <div class="grid">
-                                <div class="form-group">
-                                    <label for="extId" class="required">External ID (given to customers)</label>
-                                    <div class="input-with-actions">
-                                        <input
-                                                type="text"
-                                                id="extId"
-                                                th:field="*{extId}"
-                                                placeholder="AUTO-GENERATED"
-                                                required
-                                                pattern="[A-Z]{16}"
-                                                minlength="16"
-                                                maxlength="16"
-                                                autocomplete="off"
-                                                inputmode="latin"
-                                                aria-describedby="extIdHelp"
-                                        />
-                                        <div class="actions">
-                                            <button type="button" class="btn btn-ghost" id="genExtId"
-                                                    title="Generate new ID">Generate
-                                            </button>
-                                            <button type="button" class="btn btn-ghost" id="copyExtId"
-                                                    title="Copy to clipboard">Copy
-                                            </button>
-                                        </div>
+                            <div class="row g-3">
+
+                                <!-- External ID -->
+                                <div class="col-12">
+                                    <label for="extId" class="form-label fw-semibold">External ID (given to customers)</label>
+                                    <div class="input-group">
+                                        <input type="text" id="extId" th:field="*{extId}" class="form-control"
+                                               placeholder="AUTO-GENERATED"
+                                               required pattern="[A-Z]{16}" minlength="16" maxlength="16"
+                                               autocomplete="off" inputmode="latin"
+                                               aria-describedby="extIdHelp"/>
+                                        <button type="button" class="btn btn-outline-secondary" id="genExtId">Generate</button>
+                                        <button type="button" class="btn btn-outline-secondary" id="copyExtId">Copy</button>
                                     </div>
-                                    <div class="hint" id="extIdHelp">
+                                    <div id="extIdHelp" class="form-text">
                                         Exactly 16 uppercase letters (A–Z). Generated automatically on load.
                                     </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="name" class="required">Internal Name</label>
-                                    <input type="text" id="name" th:field="*{name}"
+                                <!-- Name -->
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label fw-semibold">Internal Name</label>
+                                    <input type="text" id="name" th:field="*{name}" class="form-control"
                                            placeholder="What the voucher is for" required/>
-                                    <div class="hint">Human‑friendly internal title.</div>
+                                    <div class="form-text">Human-friendly internal title.</div>
                                 </div>
 
-                                <div class="form-group col-span-2">
-                                    <label for="description">Description (internal)</label>
-                                    <textarea id="description" th:field="*{description}"
+                                <!-- Tag -->
+                                <div class="col-md-6">
+                                    <label for="tag" class="form-label fw-semibold">Tag</label>
+                                    <input type="text" id="tag" th:field="*{tag}" class="form-control"
+                                           placeholder="game_night" required/>
+                                    <div class="form-text">Use <code>game_night</code>.</div>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="col-12">
+                                    <label for="description" class="form-label fw-semibold">Description (internal)</label>
+                                    <textarea id="description" th:field="*{description}" class="form-control"
                                               placeholder="Keep it consistent with existing vouchers"></textarea>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="tag" class="required">Tag</label>
-                                    <input type="text" id="tag" th:field="*{tag}" placeholder="game_night" required/>
-                                    <div class="hint">Use <code>game_night</code>.</div>
+                                <!-- Valid From -->
+                                <div class="col-md-6">
+                                    <label for="notBefore" class="form-label fw-semibold">Valid From (epoch seconds)</label>
+                                    <input type="number" id="notBefore" th:field="*{notBefore}" class="form-control"
+                                           min="0" step="1" placeholder="e.g. 1754726400" required/>
+                                    <div class="form-text">When the voucher begins (Unix time, seconds).</div>
+                                    <input type="datetime-local" id="notBeforeHelper" class="form-control mt-1"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="notBefore" class="required">Valid From (epoch seconds)</label>
-                                    <input type="number" id="notBefore" th:field="*{notBefore}" min="0" step="1"
-                                           placeholder="e.g. 1754726400" required/>
-                                    <div class="hint">When the voucher begins (Unix time, seconds).</div>
-                                    <div class="hint"><small><strong>Helper:</strong> pick date/time → auto‑fills epoch</small>
+                                <!-- Expiry -->
+                                <div class="col-md-6">
+                                    <label for="expiry" class="form-label fw-semibold">Expiry (epoch seconds)</label>
+                                    <input type="number" id="expiry" th:field="*{expiry}" class="form-control"
+                                           min="0" step="1" placeholder="e.g. 1754910000" required/>
+                                    <div class="form-text">When the voucher expires (Unix time, seconds).</div>
+                                    <input type="datetime-local" id="expiryHelper" class="form-control mt-1"/>
+                                </div>
+
+                                <!-- Range warning -->
+                                <div class="col-12" id="rangeWarn" style="display:none;">
+                                    <div class="alert alert-warning p-2 mb-0">
+                                        Expiry must be after or equal to “Valid From”.
                                     </div>
-                                    <input type="datetime-local" id="notBeforeHelper"/>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="expiry" class="required">Expiry (epoch seconds)</label>
-                                    <input type="number" id="expiry" th:field="*{expiry}" min="0" step="1"
-                                           placeholder="e.g. 1754910000" required/>
-                                    <div class="hint">When the voucher expires (Unix time, seconds).</div>
-                                    <div class="hint"><small><strong>Helper:</strong> pick date/time → auto‑fills epoch</small>
-                                    </div>
-                                    <input type="datetime-local" id="expiryHelper"/>
-                                </div>
-
-                                <div class="form-group col-span-2" id="rangeWarn" style="display:none;">
-                                    <div class="warn">Expiry must be after or equal to “Valid From”.</div>
-                                </div>
                             </div>
                         </div>
 
-                        <div class="card-footer">
-                            <a th:href="@{/vouchers}" class="btn btn-ghost">Cancel</a>
+                        <div class="card-footer d-flex justify-content-end gap-2">
+                            <a th:href="@{/vouchers}" class="btn btn-outline-secondary">Cancel</a>
                             <button type="submit" class="btn btn-primary" id="submitBtn">Save Voucher</button>
                         </div>
                     </form>
                 </div>
+            </div>
 
-                <div class="card preview-card">
-                    <div class="card-header"><h2 class="title">Preview</h2></div>
-                    <div class="card-sub">Voucher Information</div>
+            <!-- Right: Preview -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 sticky-top" style="top:1rem;">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h6 mb-0">Preview</h2>
+                    </div>
+                    <div class="card-subtitle bg-light px-3 py-2 border-bottom">Voucher Information</div>
                     <div class="card-body">
                         <p><strong>ext_id:</strong> <span id="pv-ext">—</span></p>
                         <p><strong>name:</strong> <span id="pv-name">—</span></p>
@@ -117,10 +117,9 @@
                         <p><strong>expiry (epoch):</strong> <span id="pv-exp">—</span></p>
                     </div>
                 </div>
-
             </div>
-
         </div>
+
     </div>
 </div>
 

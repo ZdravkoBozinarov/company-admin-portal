@@ -1,40 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout :: head">
-    <link rel="stylesheet" th:href="@{/css/listVoucher.css}"/>
-</head>
-
+<head th:replace="layout :: head"></head>
 <body>
 <div th:replace="layout :: layout">
     <div th:fragment="content">
-        <h1 class="page-title">Vouchers</h1>
-        <a th:href="@{/vouchers/create}" class="btn btn-create">New Voucher</a>
+        <div class="container-fluid py-4">
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col">
+                    <h2 class="h3 mb-0"><i class="fas fa-ticket-alt text-primary me-2"></i>Vouchers</h2>
+                </div>
+                <div class="col-auto d-flex gap-2">
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Back
+                    </a>
+                    <a th:href="@{/vouchers/create}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i> New Voucher
+                    </a>
+                </div>
+            </div>
 
-        <table class="table-vouchers">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>External ID</th>
-                <th>Name</th>
-                <th>Tag</th>
-                <th>Start</th>
-                <th>Expiry</th>
-                <th>Max Uses</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="voucher : ${vouchers}">
-                <td th:text="${voucher.id}">1</td>
-                <td th:text="${voucher.extId}">ABC123</td>
-                <td th:text="${voucher.name}">Summer Sale</td>
-                <td th:text="${voucher.tag}">promo</td>
-                <td th:text="${#dates.format(voucher.notBefore, 'yyyy-MM-dd HH:mm')}">2025-05-01 10:00</td>
-                <td th:text="${#dates.format(voucher.expiry,    'yyyy-MM-dd HH:mm')}">2025-05-10 23:59</td>
-                <td th:text="${voucher.maxUses ?: '∞'}">100</td>
-            </tr>
-            </tbody>
-        </table>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form class="row g-2 mb-3" th:action="@{/vouchers}" method="get">
+                        <div class="col-12 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                <input type="text" name="q" class="form-control"
+                                       placeholder="Search by name, tag or ID"
+                                       th:value="${param.q}">
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm align-middle table-hover">
+                            <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>External ID</th>
+                                <th>Name</th>
+                                <th>Tag</th>
+                                <th>Start</th>
+                                <th>Expiry</th>
+                                <th>Max Uses</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="voucher : ${vouchers}">
+                                <td th:text="${voucher.id}">1</td>
+                                <td class="fw-semibold" th:text="${voucher.extId}">ABC123</td>
+                                <td th:text="${voucher.name}">Summer Sale</td>
+                                <td><span class="badge bg-info text-dark" th:text="${voucher.tag}">promo</span></td>
+                                <td th:text="${#dates.format(voucher.notBefore, 'yyyy-MM-dd HH:mm')}">2025-05-01 10:00</td>
+                                <td th:text="${#dates.format(voucher.expiry, 'yyyy-MM-dd HH:mm')}">2025-05-10 23:59</td>
+                                <td th:text="${voucher.maxUses ?: '∞'}">100</td>
+                            </tr>
+                            <tr th:if="${#lists.isEmpty(vouchers)}">
+                                <td colspan="7" class="text-center text-muted py-4">No vouchers found.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-3" th:if="${page != null}">
+                        <div class="small text-muted">
+                            <span th:text="${page.number + 1}">1</span>/<span th:text="${page.totalPages}">1</span>
+                            • <span th:text="${page.totalElements}">0</span> total
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               th:classappend="${page.first} ? ' disabled'"
+                               th:href="@{/vouchers(page=${page.number - 1}, q=${param.q})}">
+                                <i class="fas fa-chevron-left me-1"></i>Prev
+                            </a>
+                            <a class="btn btn-sm btn-outline-secondary"
+                               th:classappend="${page.last} ? ' disabled'"
+                               th:href="@{/vouchers(page=${page.number + 1}, q=${param.q})}">
+                                Next<i class="fas fa-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

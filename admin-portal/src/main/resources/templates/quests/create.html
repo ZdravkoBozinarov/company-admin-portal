@@ -5,8 +5,6 @@
     <title>Quest Creation Tool</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
-    <link rel="stylesheet" th:href="@{/css/overview.css}">
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
@@ -15,7 +13,6 @@
         <div class="d-flex justify-content-center">
             <div class="container py-5" style="max-width: 1100px; width: 100%;">
                 <div class="row w-100">
-                    <!-- 🟩 Лява колона: формата -->
                     <div class="col-md-7">
                         <div class="d-flex align-items-center mb-4">
                             <button class="btn btn-outline-secondary me-3" onclick="history.back()">
@@ -25,10 +22,8 @@
                         </div>
 
                         <form th:action="@{/quests/create}" method="post">
-                            <!-- ... всички input-и и div-ове от формата тук ... -->
                             <form th:action="@{/quests/create}" method="post">
 
-                                <!-- Name / Subtitle -->
                                 <div class="mb-3">
                                     <label class="form-label">Name *</label>
                                     <input type="text" class="form-control" name="name" id="name" required>
@@ -39,21 +34,18 @@
                                     <input type="text" class="form-control" name="subtitle" id="subtitle">
                                 </div>
 
-                                <!-- Description -->
                                 <div class="mb-3">
                                     <label class="form-label">Description *</label>
                                     <textarea class="form-control" name="description" rows="4" id="description"
                                               required></textarea>
                                 </div>
 
-                                <!-- Banner Image -->
                                 <div class="mb-3">
                                     <label class="form-label">Banner Image (Optional)</label>
                                     <input type="text" class="form-control" name="banner_image" id="banner_image"
                                            placeholder="e.g. 575d7753-d5f8-465e-a63c.png">
                                 </div>
 
-                                <!-- Category -->
                                 <div class="mb-3">
                                     <label class="form-label">Category *</label>
                                     <select class="form-select" name="category" id="category" required>
@@ -65,7 +57,6 @@
                                     </select>
                                 </div>
 
-                                <!-- Enabled / Hidden -->
                                 <div class="mb-3 form-check form-switch">
                                     <input class="form-check-input" type="checkbox" name="enabled" id="enabled">
                                     <label class="form-check-label" for="enabled">Enabled</label>
@@ -76,7 +67,6 @@
                                     <label class="form-check-label" for="hidden">Hidden</label>
                                 </div>
 
-                                <!-- Cooldown / Max Completions -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Check Cooldown</label>
@@ -90,7 +80,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Not Before / Expiry -->
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Not Before (start)</label>
@@ -102,7 +91,6 @@
                                     </div>
                                 </div>
 
-                                <!-- RRule / Dtstart -->
                                 <div class="mb-3">
                                     <label class="form-label">RRule (Optional)</label>
                                     <input type="text" class="form-control" name="rrule"
@@ -113,7 +101,6 @@
                                     <label class="form-label">Dtstart (required if RRule)</label>
                                     <input type="datetime-local" class="form-control" name="dtstart" id="dtstart">
                                 </div>
-
 
                                 <div class="mb-3">
                                     <label class="form-label" for="template">Choose a Quest Preset</label>
@@ -126,7 +113,6 @@
                                     </select>
                                 </div>
 
-                                <!-- Template / Data -->
                                 <div class="mb-3">
                                     <label class="form-label">Template</label>
                                     <input type="text" class="form-control" name="template" placeholder="e.g. has_weapon" id="template">
@@ -138,7 +124,6 @@
                                               placeholder='{"weapon": [7]}' id="data"></textarea>
                                 </div>
 
-                                <!-- Submit -->
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-success px-4">
                                         <i class="fas fa-save me-2"></i>Save Quest
@@ -147,7 +132,6 @@
                             </form>
                     </div>
 
-                    <!-- 🟦 Дясна колона: preview -->
                     <div class="col-md-4 offset-md-1">
                         <div class="card shadow-sm">
                             <div class="card-body">

@@ -4,10 +4,8 @@
     <title>Quests</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/sidebar.css}">
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
@@ -17,39 +15,26 @@
                 <div class="col">
                     <h2 class="h3 mb-0"><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
                 </div>
-                <div class="col-auto">
+                <div class="col-auto d-flex gap-2">
+                    <a href="javascript:history.back()" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-2"></i> Back
+                    </a>
                     <a th:href="@{/quests/create}" class="btn btn-success">
-                        <i class="fas fa-plus me-2"></i>New Quest
+                        <i class="fas fa-plus me-2"></i> New Quest
                     </a>
                 </div>
             </div>
 
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <form class="row g-2 align-items-center mb-3" th:action="@{/quests}" method="get">
-                        <div class="col-sm-5 col-md-6">
+                    <form class="row g-2 mb-3" th:action="@{/quests}" method="get">
+                        <div class="col-12 col-md-6">
                             <div class="input-group">
                                 <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                <input type="text" name="q" class="form-control" placeholder="Search by name or subtitle" th:value="${param.q}">
+                                <input type="text" name="q" class="form-control"
+                                       placeholder="Search by name or subtitle"
+                                       th:value="${param.q}">
                             </div>
-                        </div>
-                        <div class="col-sm-3 col-md-2">
-                            <select class="form-select" name="category" th:value="${param.category}">
-                                <option value="">All categories</option>
-                                <option th:each="c : ${categories}" th:value="${c}" th:text="${c}">Category</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2 col-md-2">
-                            <select class="form-select" name="status" th:value="${param.status}">
-                                <option value="">Any status</option>
-                                <option value="enabled">Enabled</option>
-                                <option value="disabled">Disabled</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2 col-md-2 text-end">
-                            <button type="submit" class="btn btn-outline-primary w-100">
-                                <i class="fas fa-filter me-2"></i>Filter
-                            </button>
                         </div>
                     </form>
 
@@ -76,11 +61,13 @@
                                 </td>
                                 <td class="text-capitalize" th:text="${quest.category}">gamer</td>
                                 <td>
-                                    <span class="badge rounded-pill" th:text="${quest.enabled} ? 'Enabled' : 'Disabled'"
+                                    <span class="badge rounded-pill"
+                                          th:text="${quest.enabled} ? 'Enabled' : 'Disabled'"
                                           th:classappend="${quest.enabled} ? 'bg-success' : 'bg-danger'">Enabled</span>
                                 </td>
                                 <td>
-                                    <span class="badge rounded-pill" th:text="${quest.hidden} ? 'Hidden' : 'Visible'"
+                                    <span class="badge rounded-pill"
+                                          th:text="${quest.hidden} ? 'Hidden' : 'Visible'"
                                           th:classappend="${quest.hidden} ? 'bg-warning text-dark' : 'bg-primary'">Visible</span>
                                 </td>
                                 <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd''T''HH:mm:ss') : '-'}">-</td>
@@ -97,9 +84,7 @@
                                 </td>
                             </tr>
                             <tr th:if="${#lists.isEmpty(quests)}">
-                                <td colspan="8" class="text-center text-muted py-4">
-                                    No quests found.
-                                </td>
+                                <td colspan="8" class="text-center text-muted py-4">No quests found.</td>
                             </tr>
                             </tbody>
                         </table>
@@ -113,12 +98,12 @@
                         <div class="btn-group">
                             <a class="btn btn-sm btn-outline-secondary"
                                th:classappend="${page.first} ? ' disabled'"
-                               th:href="@{/quests(page=${page.number - 1}, q=${param.q}, category=${param.category}, status=${param.status})}">
+                               th:href="@{/quests(page=${page.number - 1}, q=${param.q})}">
                                 <i class="fas fa-chevron-left me-1"></i>Prev
                             </a>
                             <a class="btn btn-sm btn-outline-secondary"
                                th:classappend="${page.last} ? ' disabled'"
-                               th:href="@{/quests(page=${page.number + 1}, q=${param.q}, category=${param.category}, status=${param.status})}">
+                               th:href="@{/quests(page=${page.number + 1}, q=${param.q})}">
                                 Next<i class="fas fa-chevron-right ms-1"></i>
                             </a>
                         </div>

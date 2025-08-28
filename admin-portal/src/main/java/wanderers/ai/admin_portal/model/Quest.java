@@ -1,17 +1,22 @@
 package wanderers.ai.admin_portal.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import org.hibernate.annotations.Type;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Map;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "quest")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Quest {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,19 +26,21 @@ public class Quest {
     private String description;
     private String bannerImage;
     private String category;
-    private boolean enabled;
-    private int checkCooldown;
-    private int maxCompletions;
-    private Instant createdAt;
-    private Instant notBefore;
-    private Instant expiry;
+    private Boolean enabled;
+    private Integer checkCooldown;
+    private Integer maxCompletions;
+
+    private LocalDateTime notBefore;
+    private LocalDateTime expiry;
+    private LocalDateTime createdAt;
+
     private String rrule;
-    private Instant dtstart;
+    private LocalDateTime dtstart;
     private String template;
 
+    @Type(JsonBinaryType.class)
     @Column(columnDefinition = "jsonb")
-    private String data;
+    private Map<String, Object> data;
 
-    private boolean hidden;
+    private Boolean hidden;
 }
-

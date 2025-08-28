@@ -1,119 +1,44 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Quests</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div th:replace="~{layout :: layout}">
-    <div th:fragment="content">
-        <div class="container-fluid py-4">
-            <div class="row g-3 align-items-center mb-3">
-                <div class="col">
-                    <h2 class="h3 mb-0"><i class="fas fa-bullseye text-primary me-2"></i>Quests</h2>
-                </div>
-                <div class="col-auto d-flex gap-2">
-                    <a href="javascript:history.back()" class="btn btn-outline-secondary">
-                        <i class="fas fa-arrow-left me-2"></i> Back
-                    </a>
-                    <a th:href="@{/quests/create}" class="btn btn-success">
-                        <i class="fas fa-plus me-2"></i> New Quest
-                    </a>
-                </div>
-            </div>
-
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form class="row g-2 mb-3" th:action="@{/quests}" method="get">
-                        <div class="col-12 col-md-6">
-                            <div class="input-group">
-                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                <input type="text" name="q" class="form-control"
-                                       placeholder="Search by name or subtitle"
-                                       th:value="${param.q}">
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="table-responsive">
-                        <table class="table table-sm align-middle table-hover">
-                            <thead class="table-light">
-                            <tr>
-                                <th class="text-nowrap">#</th>
-                                <th>Name</th>
-                                <th class="text-nowrap">Category</th>
-                                <th class="text-nowrap">Status</th>
-                                <th class="text-nowrap">Visibility</th>
-                                <th class="text-nowrap">Start</th>
-                                <th class="text-nowrap">End</th>
-                                <th class="text-end text-nowrap">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="quest : ${quests}">
-                                <td th:text="${quest.id}">1</td>
-                                <td>
-                                    <div class="fw-semibold" th:text="${quest.name}">Quest Name</div>
-                                    <div class="text-muted small" th:text="${quest.subtitle}">Subtitle</div>
-                                </td>
-                                <td class="text-capitalize" th:text="${quest.category}">gamer</td>
-                                <td>
-                                    <span class="badge rounded-pill"
-                                          th:text="${quest.enabled} ? 'Enabled' : 'Disabled'"
-                                          th:classappend="${quest.enabled} ? 'bg-success' : 'bg-danger'">Enabled</span>
-                                </td>
-                                <td>
-                                    <span class="badge rounded-pill"
-                                          th:text="${quest.hidden} ? 'Hidden' : 'Visible'"
-                                          th:classappend="${quest.hidden} ? 'bg-warning text-dark' : 'bg-primary'">Visible</span>
-                                </td>
-                                <td th:text="${quest.notBefore != null ? #temporals.format(quest.notBefore, 'yyyy-MM-dd''T''HH:mm:ss') : '-'}">-</td>
-                                <td th:text="${quest.expiry    != null ? #temporals.format(quest.expiry,    'yyyy-MM-dd''T''HH:mm:ss') : '-'}">-</td>
-                                <td class="text-end">
-                                    <div class="btn-group">
-                                        <a th:href="@{'/quests/edit/'   + ${quest.id}}" class="btn btn-sm btn-outline-primary">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a th:href="@{'/quests/delete/' + ${quest.id}}" class="btn btn-sm btn-outline-danger">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(quests)}">
-                                <td colspan="8" class="text-center text-muted py-4">No quests found.</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="d-flex justify-content-between align-items-center mt-3" th:if="${page != null}">
-                        <div class="small text-muted">
-                            <span th:text="${page.number + 1}">1</span>/<span th:text="${page.totalPages}">1</span>
-                            • <span th:text="${page.totalElements}">0</span> total
-                        </div>
-                        <div class="btn-group">
-                            <a class="btn btn-sm btn-outline-secondary"
-                               th:classappend="${page.first} ? ' disabled'"
-                               th:href="@{/quests(page=${page.number - 1}, q=${param.q})}">
-                                <i class="fas fa-chevron-left me-1"></i>Prev
-                            </a>
-                            <a class="btn btn-sm btn-outline-secondary"
-                               th:classappend="${page.last} ? ' disabled'"
-                               th:href="@{/quests(page=${page.number + 1}, q=${param.q})}">
-                                Next<i class="fas fa-chevron-right ms-1"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+    <div th:fragment="content" class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-primary">All Quests</h2>
+            <a href="/quests/create" class="btn btn-success">
+                <i class="fas fa-plus-circle me-2"></i>Create Quest
+            </a>
         </div>
+
+        <table class="table table-bordered table-striped">
+            <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Enabled</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="quest : ${quests}">
+                <td th:text="${quest.id}"></td>
+                <td th:text="${quest.name}"></td>
+                <td th:text="${quest.category}"></td>
+                <td>
+                    <span th:text="${quest.enabled} ? 'Yes' : 'No'"
+                          th:classappend="${quest.enabled} ? 'text-success' : 'text-danger'"></span>
+                </td>
+                <td th:text="${#temporals.format(quest.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 @Entity
@@ -43,4 +44,9 @@ public class Quest {
     private Map<String, Object> data;
 
     private Boolean hidden;
+
+    public String getFormattedCreatedAt() {
+        return createdAt != null ? createdAt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "—";
+    }
+
 }

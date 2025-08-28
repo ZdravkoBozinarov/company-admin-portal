@@ -48,5 +48,13 @@ public class QuestController {
         questService.save(quest);
         return "redirect:/quests";
     }
+
+    @GetMapping("/{id}")
+    public String viewQuest(@PathVariable Long id, Model model) {
+        Quest quest = questService.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid quest Id:" + id));
+        model.addAttribute("quest", quest);
+        return "quests/view";
+    }
 }
 

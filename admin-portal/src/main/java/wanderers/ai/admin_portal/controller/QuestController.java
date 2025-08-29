@@ -42,7 +42,7 @@ public class QuestController {
                 Map<String,Object> parsed = mapper.readValue(dataJson, new TypeReference<>() {});
                 quest.setData(parsed);
             } catch (Exception e) {
-                quest.setData(Map.of()); // fallback empty JSON
+                quest.setData(Map.of());
             }
         }
         questService.save(quest);

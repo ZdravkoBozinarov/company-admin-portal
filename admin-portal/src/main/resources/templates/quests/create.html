@@ -3,150 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Quest</title>
+
+    <!-- Global CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Sidebar effects (served from /static/css/sidebar.css).
+         Add href fallback so it still loads if th:href fails. -->
+    <link th:href="@{/css/sidebar.css}" href="/css/sidebar.css" rel="stylesheet">
 </head>
 <body>
-<div th:replace="~{layout :: layout}">
-    <div th:fragment="content" class="d-flex justify-content-center">
 
-        <div class="container py-5" style="max-width: 1100px; width: 100%;">
-            <div class="row w-100">
-                <div class="col-md-7">
-                    <div class="d-flex align-items-center mb-4">
-                        <button class="btn btn-outline-secondary me-3" onclick="history.back()">
-                            <i class="fas fa-arrow-left me-1"></i> Back
-                        </button>
-                        <h2 class="text-primary mb-0"><i class="fas fa-plus-circle me-2"></i>Create New Quest</h2>
-                    </div>
+<!-- OUTER wrapper spans full viewport height -->
+<div class="d-flex min-vh-100 align-items-stretch">
 
-                    <!-- FORM -->
-                    <form th:action="@{/quests}" th:object="${quest}" method="post">
+    <!-- Sidebar (fragment renders your inner div with the long Bootstrap class chain) -->
+    <aside class="flex-shrink-0">
+        <div th:replace="~{fragments/sidebar :: sidebar}"></div>
+    </aside>
 
-                        <div class="mb-3">
-                            <label class="form-label">Name *</label>
-                            <input type="text" th:field="*{name}" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Subtitle</label>
-                            <input type="text" th:field="*{subtitle}" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Description *</label>
-                            <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Banner Image (Optional)</label>
-                            <input type="text" th:field="*{bannerImage}" class="form-control"
-                                   placeholder="e.g. 575d7753-d5f8-465e-a63c.png">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Category *</label>
-                            <select th:field="*{category}" class="form-select" required>
-                                <option value="">-- Select Category --</option>
-                                <option value="gamer">Gamer</option>
-                                <option value="social">Social</option>
-                                <option value="creator">Creator</option>
-                                <option value="collector">Collector</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3 form-check form-switch">
-                            <input th:field="*{enabled}" class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Enabled</label>
-                        </div>
-
-                        <div class="mb-3 form-check form-switch">
-                            <input th:field="*{hidden}" class="form-check-input" type="checkbox">
-                            <label class="form-check-label">Hidden</label>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Check Cooldown</label>
-                                <input type="number" th:field="*{checkCooldown}" class="form-control" value="10">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Max Completions</label>
-                                <input type="number" th:field="*{maxCompletions}" class="form-control" value="1">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Not Before (start)</label>
-                                <input type="datetime-local" th:field="*{notBefore}" class="form-control">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Expiry (end)</label>
-                                <input type="datetime-local" th:field="*{expiry}" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">RRule (Optional)</label>
-                            <input type="text" th:field="*{rrule}" class="form-control"
-                                   placeholder="e.g. RRULE:FREQ=WEEKLY;WKST=MO">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Dtstart (Optional)</label>
-                            <input type="datetime-local" th:field="*{dtstart}" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Template</label>
-                            <input type="text" th:field="*{template}" class="form-control"
-                                   placeholder="e.g. has_weapon">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Data (JSON)</label>
-                            <textarea name="dataJson" class="form-control" rows="3"
-                                      placeholder='{"weapon": [7]}'></textarea>
-                        </div>
-
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success px-4">
-                                <i class="fas fa-save me-2"></i> Save Quest
+    <!-- Main content -->
+    <main class="flex-grow-1 p-3">
+        <div class="d-flex justify-content-center">
+            <div class="container py-5" style="max-width: 1100px; width: 100%;">
+                <div class="row w-100">
+                    <div class="col-md-7">
+                        <div class="d-flex align-items-center mb-4">
+                            <button class="btn btn-outline-secondary me-3" onclick="history.back()">
+                                <i class="fas fa-arrow-left me-1"></i> Back
                             </button>
+                            <h2 class="text-primary mb-0">
+                                <i class="fas fa-plus-circle me-2"></i>Create New Quest
+                            </h2>
                         </div>
-                    </form>
-                </div>
 
-                <!-- Live Preview -->
-                <div class="col-md-4 offset-md-1">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h4 class="card-title" id="previewName">Quest Name</h4>
-                            <h6 class="card-subtitle mb-2 text-muted" id="previewSubtitle">Subtitle</h6>
-                            <p class="card-text" id="previewDescription">Description will appear here.</p>
+                        <!-- FORM -->
+                        <form th:action="@{/quests}" th:object="${quest}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Name *</label>
+                                <input type="text" th:field="*{name}" class="form-control" required>
+                            </div>
 
-                            <ul class="list-unstyled small">
-                                <li><b>Category:</b> <span id="previewCategory">-</span></li>
-                                <li><b>Status:</b> <span id="previewEnabled">Disabled</span></li>
-                                <li><b>Hidden:</b> <span id="previewHidden">No</span></li>
-                                <li><b>Check Cooldown:</b> <span id="previewCooldown">10</span></li>
-                                <li><b>Max Completions:</b> <span id="previewCompletions">1</span></li>
-                                <li><b>Start:</b> <span id="previewStart">-</span></li>
-                                <li><b>End:</b> <span id="previewEnd">-</span></li>
-                                <li><b>RRule:</b> <span id="previewRrule">-</span></li>
-                                <li><b>Dtstart:</b> <span id="previewDtstart">-</span></li>
-                                <li><b>Template:</b> <span id="previewTemplate">-</span></li>
-                                <li><b>Data:</b> <span id="previewData">{}</span></li>
-                            </ul>
+                            <div class="mb-3">
+                                <label class="form-label">Subtitle</label>
+                                <input type="text" th:field="*{subtitle}" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description *</label>
+                                <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Banner Image (Optional)</label>
+                                <input type="text" th:field="*{bannerImage}" class="form-control"
+                                       placeholder="e.g. 575d7753-d5f8-465e-a63c.png">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Category *</label>
+                                <select th:field="*{category}" class="form-select" required>
+                                    <option value="">-- Select Category --</option>
+                                    <option value="gamer">Gamer</option>
+                                    <option value="social">Social</option>
+                                    <option value="creator">Creator</option>
+                                    <option value="collector">Collector</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3 form-check form-switch">
+                                <input th:field="*{enabled}" class="form-check-input" type="checkbox">
+                                <label class="form-check-label">Enabled</label>
+                            </div>
+
+                            <div class="mb-3 form-check form-switch">
+                                <input th:field="*{hidden}" class="form-check-input" type="checkbox">
+                                <label class="form-check-label">Hidden</label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Check Cooldown</label>
+                                    <input type="number" th:field="*{checkCooldown}" class="form-control" value="10">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Max Completions</label>
+                                    <input type="number" th:field="*{maxCompletions}" class="form-control" value="1">
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Not Before (start)</label>
+                                    <input type="datetime-local" th:field="*{notBefore}" class="form-control">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Expiry (end)</label>
+                                    <input type="datetime-local" th:field="*{expiry}" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">RRule (Optional)</label>
+                                <input type="text" th:field="*{rrule}" class="form-control"
+                                       placeholder="e.g. RRULE:FREQ=WEEKLY;WKST=MO">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Dtstart (Optional)</label>
+                                <input type="datetime-local" th:field="*{dtstart}" class="form-control">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Template</label>
+                                <input type="text" th:field="*{template}" class="form-control"
+                                       placeholder="e.g. has_weapon">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Data (JSON)</label>
+                                <textarea name="dataJson" class="form-control" rows="3"
+                                          placeholder='{"weapon": [7]}'></textarea>
+                            </div>
+
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success px-4">
+                                    <i class="fas fa-save me-2"></i> Save Quest
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Live Preview -->
+                    <div class="col-md-4 offset-md-1">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h4 class="card-title" id="previewName">Quest Name</h4>
+                                <h6 class="card-subtitle mb-2 text-muted" id="previewSubtitle">Subtitle</h6>
+                                <p class="card-text" id="previewDescription">Description will appear here.</p>
+
+                                <ul class="list-unstyled small">
+                                    <li><b>Category:</b> <span id="previewCategory">-</span></li>
+                                    <li><b>Status:</b> <span id="previewEnabled">Disabled</span></li>
+                                    <li><b>Hidden:</b> <span id="previewHidden">No</span></li>
+                                    <li><b>Check Cooldown:</b> <span id="previewCooldown">10</span></li>
+                                    <li><b>Max Completions:</b> <span id="previewCompletions">1</span></li>
+                                    <li><b>Start:</b> <span id="previewStart">-</span></li>
+                                    <li><b>End:</b> <span id="previewEnd">-</span></li>
+                                    <li><b>RRule:</b> <span id="previewRrule">-</span></li>
+                                    <li><b>Dtstart:</b> <span id="previewDtstart">-</span></li>
+                                    <li><b>Template:</b> <span id="previewTemplate">-</span></li>
+                                    <li><b>Data:</b> <span id="previewData">{}</span></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-    </div>
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.wrapper -->
+    </main>
 </div>
+
+<!-- Global JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Page script -->
 <script th:src="@{/js/quest-form.js}"></script>
 </body>
 </html>

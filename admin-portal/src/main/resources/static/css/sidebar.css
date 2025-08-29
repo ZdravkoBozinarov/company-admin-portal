@@ -1,0 +1,117 @@
+/* ===== Admin Panel Sidebar – universal, no cutoffs ===== */
+
+/* Theme tokens */
+:root{
+  --sb-w: 250px;
+  --sb-base-1: #0e1117;
+  --sb-base-2: #10141b;
+  --sb-stroke: rgba(255,255,255,.08);
+  --sb-accent-1: #7c5cff;
+  --sb-accent-2: #22d3ee;
+  --sb-hover: rgba(255,255,255,.08);
+  --sb-text: #e7eaf1;
+}
+
+/* Page stretch */
+html, body { height: 100%; }
+body > .d-flex { min-height: 100vh; align-items: stretch; }
+
+/* ---------- Primary path: paint the ASIDE column ---------- */
+body > .d-flex > aside{
+  width: var(--sb-w);
+  position: relative;
+  background:
+    radial-gradient(1200px 600px at -10% -10%, rgba(124,92,255,.12), transparent 60%),
+    radial-gradient(1200px 600px at 110% 110%, rgba(34,211,238,.10), transparent 60%),
+    linear-gradient(160deg, var(--sb-base-1), var(--sb-base-2));
+  border-right: 1px solid var(--sb-stroke);
+  overflow: hidden;
+}
+body > .d-flex > aside::after{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0 1px, transparent 2px),
+    linear-gradient(90deg, transparent, rgba(255,255,255,.03));
+}
+
+/* Inner fragment wrapper inside <aside>:
+   make it transparent and let it stretch with the column */
+body > .d-flex > aside > .d-flex.flex-column.flex-shrink-0.bg-dark.text-white.p-3{
+  width: 100% !important;
+  background: transparent !important;   /* kill double color */
+  color: var(--sb-text);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+  overflow: visible;                    /* page scrolls, not the sidebar */
+}
+
+/* ---------- Fallback: pages without an <aside> wrapper ----------
+   (e.g., Overview places the fragment directly under the outer .d-flex) */
+body > .d-flex > .d-flex.flex-column.flex-shrink-0.bg-dark.text-white.p-3{
+  width: var(--sb-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--sb-text);
+  background:
+    radial-gradient(1200px 600px at -10% -10%, rgba(124,92,255,.12), transparent 60%),
+    radial-gradient(1200px 600px at 110% 110%, rgba(34,211,238,.10), transparent 60%),
+    linear-gradient(160deg, var(--sb-base-1), var(--sb-base-2));
+  border-right: 1px solid var(--sb-stroke);
+}
+
+/* Title */
+.d-flex.flex-column.flex-shrink-0.bg-dark.text-white.p-3 h4{
+  color:#fff; font-weight:600; letter-spacing:.3px;
+}
+
+/* Nav */
+.nav.nav-pills.flex-column.mb-auto .nav-link{
+  position:relative; border-radius:12px;
+  padding:.65rem .75rem; margin:.15rem 0;
+  display:flex; align-items:center; gap:.55rem;
+  color:#e9ecef !important;
+  transition:transform .18s ease, background-color .18s ease, color .18s ease, box-shadow .18s ease;
+}
+.nav.nav-pills.flex-column.mb-auto .nav-link i{ width:1.25rem; text-align:center; flex:0 0 auto; }
+.nav.nav-pills.flex-column.mb-auto .nav-link:hover,
+.nav.nav-pills.flex-column.mb-auto .nav-link:focus{
+  background-color:var(--sb-hover); transform:translateX(2px); color:#fff !important;
+}
+.nav.nav-pills.flex-column.mb-auto .nav-link.active,
+.nav.nav-pills.flex-column.mb-auto .nav-link[aria-current="page"]{
+  color:#fff !important;
+  background:linear-gradient(90deg, rgba(124,92,255,.22), rgba(34,211,238,.16));
+  box-shadow:0 0 0 1px rgba(124,92,255,.18) inset, 0 6px 16px rgba(124,92,255,.18);
+}
+.nav.nav-pills.flex-column.mb-auto .nav-link.active::before,
+.nav.nav-pills.flex-column.mb-auto .nav-link[aria-current="page"]::before{
+  content:""; position:absolute; left:-10px; top:8px; bottom:8px; width:4px; border-radius:4px;
+  background:linear-gradient(180deg, var(--sb-accent-1), var(--sb-accent-2));
+  box-shadow:0 0 18px rgba(124,92,255,.6), 0 0 12px rgba(34,211,238,.5);
+}
+
+/* Logout button */
+.mt-auto .btn.btn-outline-light.w-100{
+  border-color:rgba(255,255,255,.35); color:#f8f9fa;
+  transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+}
+.mt-auto .btn.btn-outline-light.w-100:hover{
+  background:linear-gradient(90deg, rgba(124,92,255,.22), rgba(34,211,238,.16));
+  border-color:transparent; color:#fff; transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+
+/* Scrollbar (only if the fallback wrapper scrolls) */
+body > .d-flex > .d-flex.flex-column.flex-shrink-0.bg-dark.text-white.p-3::-webkit-scrollbar{ width:8px }
+body > .d-flex > .d-flex.flex-column.flex-shrink-0.bg-dark.text-white.p-3::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg, rgba(124,92,255,.35), rgba(34,211,238,.35)); border-radius:8px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .nav.nav-pills.flex-column.mb-auto .nav-link,
+  .mt-auto .btn.btn-outline-light.w-100{ transition:none !important; }
+}

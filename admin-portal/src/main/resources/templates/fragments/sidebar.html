@@ -1,6 +1,6 @@
 <div th:fragment="sidebar" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="d-flex flex-column flex-shrink-0 bg-dark text-white p-3" style="width: 250px; min-height: 100vh;">
-
+    <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark bg-gradient min-vh-100"
+         style="width: 250px;">
         <h4 class="text-center mb-4">
             <i class="fas fa-gamepad me-2"></i> Admin Panel
         </h4>
@@ -11,31 +11,11 @@
                     <i class="fas fa-home me-2"></i> Dashboard
                 </a>
             </li>
-            <li>
-                <a th:href="@{/quests}" class="nav-link text-white">
-                    <i class="fas fa-compass me-2"></i> Quests
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/vouchers}" class="nav-link text-white">
-                    <i class="fas fa-ticket-alt me-2"></i> Vouchers
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/rewards}" class="nav-link text-white">
-                    <i class="fas fa-gift me-2"></i> Rewards
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/integrations}" class="nav-link text-white">
-                    <i class="fas fa-plug me-2"></i> Integrations
-                </a>
-            </li>
-            <li>
-                <a th:href="@{/activity}" class="nav-link text-white">
-                    <i class="fas fa-chart-line me-2"></i> Activity
-                </a>
-            </li>
+            <li><a th:href="@{/quests}" class="nav-link text-white"><i class="fas fa-compass me-2"></i> Quests</a></li>
+            <li><a th:href="@{/vouchers}" class="nav-link text-white"><i class="fas fa-ticket-alt me-2"></i> Vouchers</a></li>
+            <li><a th:href="@{/rewards}" class="nav-link text-white"><i class="fas fa-gift me-2"></i> Rewards</a></li>
+            <li><a th:href="@{/integrations}" class="nav-link text-white"><i class="fas fa-plug me-2"></i> Integrations</a></li>
+            <li><a th:href="@{/activity}" class="nav-link text-white"><i class="fas fa-chart-line me-2"></i> Activity</a></li>
         </ul>
 
         <div class="mt-auto">
@@ -43,6 +23,5 @@
                 <i class="fas fa-sign-out-alt me-2"></i> Logout
             </a>
         </div>
-
     </div>
 </div>

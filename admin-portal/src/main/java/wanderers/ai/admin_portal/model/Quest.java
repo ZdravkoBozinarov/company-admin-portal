@@ -1,10 +1,14 @@
 package wanderers.ai.admin_portal.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import org.hibernate.annotations.Type;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -18,21 +22,40 @@ import java.util.Map;
 @Builder
 public class Quest {
 
+    @NotBlank @Size(max = 128)
+    private String name;
+
+    @Size(max = 128)
+    private String subtitle;
+
+    @Size(max = 1024)
+    private String description;
+
+    @Size(max = 255)
+    private String bannerImage;
+
+    @NotBlank
+    @Size(max = 64)
+    private String category;
+
+    @Min(0)
+    private Integer checkCooldown;
+
+    @Min(0)
+    private Integer maxCompletions;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String subtitle;
-    private String description;
-    private String bannerImage;
-    private String category;
     private Boolean enabled;
-    private Integer checkCooldown;
-    private Integer maxCompletions;
 
-    private LocalDateTime notBefore;
-    private LocalDateTime expiry;
+    @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME)
+    private Instant notBefore;
+
+    @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME)
+    private Instant expiry;
+
     private LocalDateTime createdAt;
 
     private String rrule;

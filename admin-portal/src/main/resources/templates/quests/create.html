@@ -3,26 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Create New Quest</title>
-
-    <!-- Global CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-    <!-- Sidebar effects (served from /static/css/sidebar.css).
-         Add href fallback so it still loads if th:href fails. -->
     <link th:href="@{/css/sidebar.css}" href="/css/sidebar.css" rel="stylesheet">
 </head>
 <body>
-
-<!-- OUTER wrapper spans full viewport height -->
 <div class="d-flex min-vh-100 align-items-stretch">
-
-    <!-- Sidebar (fragment renders your inner div with the long Bootstrap class chain) -->
     <aside class="flex-shrink-0">
         <div th:replace="~{fragments/sidebar :: sidebar}"></div>
     </aside>
 
-    <!-- Main content -->
     <main class="flex-grow-1 p-3">
         <div class="d-flex justify-content-center">
             <div class="container py-5" style="max-width: 1100px; width: 100%;">
@@ -37,93 +27,128 @@
                             </h2>
                         </div>
 
-                        <!-- FORM -->
-                        <form th:action="@{/quests}" th:object="${quest}" method="post">
-                            <div class="mb-3">
-                                <label class="form-label">Name *</label>
-                                <input type="text" th:field="*{name}" class="form-control" required>
+                        <form th:action="@{/quests}" th:object="${quest}" method="post" novalidate>
+                            <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                                <strong>Please fix the following:</strong>
+                                <ul class="mb-0">
+                                    <li th:each="e : ${#fields.errors('*')}" th:text="${e}"></li>
+                                </ul>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Subtitle</label>
-                                <input type="text" th:field="*{subtitle}" class="form-control">
+                                <label class="form-label" for="name">Name *</label>
+                                <input id="name" type="text" th:field="*{name}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('name')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{name}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Description *</label>
-                                <textarea th:field="*{description}" class="form-control" rows="4" required></textarea>
+                                <label class="form-label" for="subtitle">Subtitle</label>
+                                <input id="subtitle" type="text" th:field="*{subtitle}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('subtitle')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{subtitle}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Banner Image (Optional)</label>
-                                <input type="text" th:field="*{bannerImage}" class="form-control"
-                                       placeholder="e.g. 575d7753-d5f8-465e-a63c.png">
+                                <label class="form-label" for="description">Description *</label>
+                                <textarea id="description" th:field="*{description}" class="form-control" rows="4"
+                                          th:classappend="${#fields.hasErrors('description')} ? ' is-invalid'"></textarea>
+                                <div class="invalid-feedback" th:errors="*{description}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Category *</label>
-                                <select th:field="*{category}" class="form-select" required>
+                                <label class="form-label" for="bannerImage">Banner Image</label>
+                                <input id="bannerImage" type="text" th:field="*{bannerImage}" class="form-control"
+                                       placeholder="e.g. 575d7753-d5f8-465e-a63c.png"
+                                       th:classappend="${#fields.hasErrors('bannerImage')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{bannerImage}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="category">Category *</label>
+                                <select id="category" th:field="*{category}" class="form-select"
+                                        th:classappend="${#fields.hasErrors('category')} ? ' is-invalid'">
                                     <option value="">-- Select Category --</option>
                                     <option value="gamer">Gamer</option>
                                     <option value="social">Social</option>
                                     <option value="creator">Creator</option>
                                     <option value="collector">Collector</option>
                                 </select>
+                                <div class="invalid-feedback" th:errors="*{category}"></div>
                             </div>
 
                             <div class="mb-3 form-check form-switch">
-                                <input th:field="*{enabled}" class="form-check-input" type="checkbox">
-                                <label class="form-check-label">Enabled</label>
+                                <input id="enabled" th:field="*{enabled}" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="enabled">Enabled</label>
                             </div>
 
                             <div class="mb-3 form-check form-switch">
-                                <input th:field="*{hidden}" class="form-check-input" type="checkbox">
-                                <label class="form-check-label">Hidden</label>
+                                <input id="hidden" th:field="*{hidden}" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="hidden">Hidden</label>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Check Cooldown</label>
-                                    <input type="number" th:field="*{checkCooldown}" class="form-control" value="10">
+                                    <label class="form-label" for="checkCooldown">Check Cooldown</label>
+                                    <input id="checkCooldown" type="number" th:field="*{checkCooldown}"
+                                           class="form-control" value="10"
+                                           th:classappend="${#fields.hasErrors('checkCooldown')} ? ' is-invalid'">
+                                    <div class="invalid-feedback" th:errors="*{checkCooldown}"></div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Max Completions</label>
-                                    <input type="number" th:field="*{maxCompletions}" class="form-control" value="1">
+                                    <label class="form-label" for="maxCompletions">Max Completions</label>
+                                    <input id="maxCompletions" type="number" th:field="*{maxCompletions}"
+                                           class="form-control" value="1"
+                                           th:classappend="${#fields.hasErrors('maxCompletions')} ? ' is-invalid'">
+                                    <div class="invalid-feedback" th:errors="*{maxCompletions}"></div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Not Before (start)</label>
-                                    <input type="datetime-local" th:field="*{notBefore}" class="form-control">
+                                    <label class="form-label" for="notBefore">Not Before</label>
+                                    <input id="notBefore" type="datetime-local" th:field="*{notBefore}"
+                                           class="form-control" step="1"
+                                           th:classappend="${#fields.hasErrors('notBefore')} ? ' is-invalid'">
+                                    <div class="invalid-feedback" th:errors="*{notBefore}"></div>
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label class="form-label">Expiry (end)</label>
-                                    <input type="datetime-local" th:field="*{expiry}" class="form-control">
+                                    <label class="form-label" for="expiry">Expiry</label>
+                                    <input id="expiry" type="datetime-local" th:field="*{expiry}"
+                                           class="form-control" step="1"
+                                           th:classappend="${#fields.hasErrors('expiry')} ? ' is-invalid'">
+                                    <div class="invalid-feedback" th:errors="*{expiry}"></div>
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">RRule (Optional)</label>
-                                <input type="text" th:field="*{rrule}" class="form-control"
-                                       placeholder="e.g. RRULE:FREQ=WEEKLY;WKST=MO">
+                                <label class="form-label" for="rrule">RRule</label>
+                                <input id="rrule" type="text" th:field="*{rrule}" class="form-control"
+                                       placeholder="RRULE:FREQ=WEEKLY;WKST=MO"
+                                       th:classappend="${#fields.hasErrors('rrule')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{rrule}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Dtstart (Optional)</label>
-                                <input type="datetime-local" th:field="*{dtstart}" class="form-control">
+                                <label class="form-label" for="dtstart">Dtstart</label>
+                                <input id="dtstart" type="datetime-local" th:field="*{dtstart}" class="form-control" step="1"
+                                       th:classappend="${#fields.hasErrors('dtstart')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{dtstart}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Template</label>
-                                <input type="text" th:field="*{template}" class="form-control"
-                                       placeholder="e.g. has_weapon">
+                                <label class="form-label" for="template">Template</label>
+                                <input id="template" type="text" th:field="*{template}" class="form-control"
+                                       placeholder="has_weapon"
+                                       th:classappend="${#fields.hasErrors('template')} ? ' is-invalid'">
+                                <div class="invalid-feedback" th:errors="*{template}"></div>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Data (JSON)</label>
-                                <textarea name="dataJson" class="form-control" rows="3"
-                                          placeholder='{"weapon": [7]}'></textarea>
+                                <label class="form-label" for="dataJson">Data (JSON)</label>
+                                <textarea id="dataJson" name="dataJson" class="form-control" rows="3"
+                                          placeholder='{"weapon": [7]}'
+                                          th:text="${param.dataJson != null} ? ${param.dataJson} : (${dataJson} != null ? ${dataJson} : '')"></textarea>
                             </div>
 
                             <div class="text-end">
@@ -134,14 +159,12 @@
                         </form>
                     </div>
 
-                    <!-- Live Preview -->
                     <div class="col-md-4 offset-md-1">
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 <h4 class="card-title" id="previewName">Quest Name</h4>
                                 <h6 class="card-subtitle mb-2 text-muted" id="previewSubtitle">Subtitle</h6>
                                 <p class="card-text" id="previewDescription">Description will appear here.</p>
-
                                 <ul class="list-unstyled small">
                                     <li><b>Category:</b> <span id="previewCategory">-</span></li>
                                     <li><b>Status:</b> <span id="previewEnabled">Disabled</span></li>
@@ -159,15 +182,12 @@
                         </div>
                     </div>
 
-                </div><!-- /.row -->
-            </div><!-- /.container -->
-        </div><!-- /.wrapper -->
+                </div>
+            </div>
+        </div>
     </main>
 </div>
-
-<!-- Global JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Page script -->
 <script th:src="@{/js/quest-form.js}"></script>
 </body>
 </html>

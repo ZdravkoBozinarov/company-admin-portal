@@ -3,116 +3,116 @@
 <head th:replace="layout :: head"></head>
 <body>
 <div th:replace="layout :: layout">
-  <div th:fragment="content">
-    <div class="container py-4">
+    <div th:fragment="content">
+        <div class="container py-4">
 
-      <!-- Header -->
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="h4 mb-0">
-          <i class="fas fa-eye text-primary me-2"></i>
-          Quest Details
-        </h2>
-        <div>
-          <a href="/quests" class="btn btn-outline-secondary">
-            <i class="fas fa-arrow-left me-1"></i> Back to List
-          </a>
-          <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-primary">
-            <i class="fas fa-edit me-1"></i> Edit
-          </a>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="h4 mb-0">
+                    <i class="fas fa-eye text-primary me-2"></i>
+                    Quest Details
+                </h2>
+                <div>
+                    <a href="/quests" class="btn btn-outline-secondary">
+                        <i class="fas fa-arrow-left me-1"></i> Back to List
+                    </a>
+                    <a th:href="@{'/quests/edit/' + ${quest.id}}" class="btn btn-primary">
+                        <i class="fas fa-edit me-1"></i> Edit
+                    </a>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3">ID</dt>
+                        <dd class="col-sm-9" th:text="${quest.id}">—</dd>
+
+                        <dt class="col-sm-3">Name</dt>
+                        <dd class="col-sm-9" th:text="${quest.name}">—</dd>
+
+                        <dt class="col-sm-3">Subtitle</dt>
+                        <dd class="col-sm-9" th:text="${quest.subtitle}">—</dd>
+
+                        <dt class="col-sm-3">Description</dt>
+                        <dd class="col-sm-9" th:text="${quest.description}">—</dd>
+
+                        <dt class="col-sm-3">Banner Image</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.bannerImage != null}" th:text="${quest.bannerImage}"></span>
+                            <span th:unless="${quest.bannerImage != null}">—</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Category</dt>
+                        <dd class="col-sm-9">
+              <span th:classappend="${
+                  quest.category == 'social' ? 'badge bg-info text-dark' :
+                  (quest.category == 'gamer' ? 'badge bg-success' :
+                  (quest.category == 'creator' ? 'badge bg-primary' :
+                  (quest.category == 'collector' ? 'badge bg-warning text-dark' :
+                  'badge bg-secondary')))}"
+                    th:text="${quest.category}">—</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Enabled</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.enabled}" class="badge bg-success">Yes</span>
+                            <span th:if="${!quest.enabled}" class="badge bg-danger">No</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Check Cooldown</dt>
+                        <dd class="col-sm-9" th:text="${quest.checkCooldown}">10</dd>
+
+                        <dt class="col-sm-3">Max Completions</dt>
+                        <dd class="col-sm-9" th:text="${quest.maxCompletions != null ? quest.maxCompletions : 1}">1</dd>
+
+                        <dt class="col-sm-3">Created At</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.createdAt != null}" th:text="${#temporals.format(quest.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                            <span th:unless="${quest.createdAt != null}">—</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Not Before</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.notBefore != null}"
+                                  th:text="${#temporals.format(quest.notBefore, 'yyyy-MM-dd''T''HH:mm:ss.SSSX')}"></span>
+                            <span th:unless="${quest.notBefore != null}">—</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Expiry</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.expiry != null}"
+                                  th:text="${#temporals.format(quest.expiry, 'yyyy-MM-dd''T''HH:mm:ss.SSSX')}"></span>
+                            <span th:unless="${quest.expiry != null}">∞</span>
+                        </dd>
+
+                        <dt class="col-sm-3">RRule</dt>
+                        <dd class="col-sm-9" th:text="${quest.rrule != null ? quest.rrule : '—'}">—</dd>
+
+                        <dt class="col-sm-3">Dtstart</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.dtstart != null}" th:text="${#temporals.format(quest.dtstart, 'yyyy-MM-dd HH:mm')}"></span>
+                            <span th:unless="${quest.dtstart != null}">—</span>
+                        </dd>
+
+                        <dt class="col-sm-3">Template</dt>
+                        <dd class="col-sm-9" th:text="${quest.template != null ? quest.template : '—'}">—</dd>
+
+                        <dt class="col-sm-3">Data</dt>
+                        <dd class="col-sm-9">
+                            <pre class="bg-light p-2 rounded small" th:text="${quest.data}">{}</pre>
+                        </dd>
+
+                        <dt class="col-sm-3">Hidden</dt>
+                        <dd class="col-sm-9">
+                            <span th:if="${quest.hidden}" class="badge bg-secondary">Yes</span>
+                            <span th:if="${!quest.hidden}" class="badge bg-light text-dark">No</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+
         </div>
-      </div>
-
-      <!-- Card with quest info -->
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <dl class="row mb-0">
-            <dt class="col-sm-3">ID</dt>
-            <dd class="col-sm-9" th:text="${quest.id}">—</dd>
-
-            <dt class="col-sm-3">Name</dt>
-            <dd class="col-sm-9" th:text="${quest.name}">—</dd>
-
-            <dt class="col-sm-3">Subtitle</dt>
-            <dd class="col-sm-9" th:text="${quest.subtitle}">—</dd>
-
-            <dt class="col-sm-3">Description</dt>
-            <dd class="col-sm-9" th:text="${quest.description}">—</dd>
-
-            <dt class="col-sm-3">Banner Image</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.bannerImage != null}" th:text="${quest.bannerImage}"></span>
-              <span th:unless="${quest.bannerImage != null}">—</span>
-            </dd>
-
-            <dt class="col-sm-3">Category</dt>
-            <dd class="col-sm-9">
-        <span th:classappend="${
-            quest.category == 'social' ? 'badge bg-info text-dark' :
-            (quest.category == 'gamer' ? 'badge bg-success' :
-            (quest.category == 'creator' ? 'badge bg-primary' :
-            (quest.category == 'collector' ? 'badge bg-warning text-dark' :
-            'badge bg-secondary')))}"
-              th:text="${quest.category}">—</span>
-            </dd>
-
-            <dt class="col-sm-3">Enabled</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.enabled}" class="badge bg-success">Yes</span>
-              <span th:if="${!quest.enabled}" class="badge bg-danger">No</span>
-            </dd>
-
-            <dt class="col-sm-3">Check Cooldown</dt>
-            <dd class="col-sm-9" th:text="${quest.checkCooldown}">10</dd>
-
-            <dt class="col-sm-3">Max Completions</dt>
-            <dd class="col-sm-9" th:text="${quest.maxCompletions != null ? quest.maxCompletions : 1}">1</dd>
-
-            <dt class="col-sm-3">Created At</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.createdAt != null}" th:text="${#temporals.format(quest.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
-              <span th:unless="${quest.createdAt != null}">—</span>
-            </dd>
-
-            <dt class="col-sm-3">Not Before</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.notBefore != null}" th:text="${#temporals.format(quest.notBefore, 'yyyy-MM-dd HH:mm')}"></span>
-              <span th:unless="${quest.notBefore != null}">—</span>
-            </dd>
-
-            <dt class="col-sm-3">Expiry</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.expiry != null}" th:text="${#temporals.format(quest.expiry, 'yyyy-MM-dd HH:mm')}"></span>
-              <span th:unless="${quest.expiry != null}">∞</span>
-            </dd>
-
-            <dt class="col-sm-3">RRule</dt>
-            <dd class="col-sm-9" th:text="${quest.rrule != null ? quest.rrule : '—'}">—</dd>
-
-            <dt class="col-sm-3">Dtstart</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.dtstart != null}" th:text="${#temporals.format(quest.dtstart, 'yyyy-MM-dd HH:mm')}"></span>
-              <span th:unless="${quest.dtstart != null}">—</span>
-            </dd>
-
-            <dt class="col-sm-3">Template</dt>
-            <dd class="col-sm-9" th:text="${quest.template != null ? quest.template : '—'}">—</dd>
-
-            <dt class="col-sm-3">Data</dt>
-            <dd class="col-sm-9">
-              <pre class="bg-light p-2 rounded small" th:text="${quest.data}">{}</pre>
-            </dd>
-
-            <dt class="col-sm-3">Hidden</dt>
-            <dd class="col-sm-9">
-              <span th:if="${quest.hidden}" class="badge bg-secondary">Yes</span>
-              <span th:if="${!quest.hidden}" class="badge bg-light text-dark">No</span>
-            </dd>
-          </dl>
-        </div>
-      </div>
-
     </div>
-  </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

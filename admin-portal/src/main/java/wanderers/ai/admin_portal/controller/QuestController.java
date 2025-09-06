@@ -19,7 +19,7 @@ import java.util.Map;
 public class QuestController {
 
     private final QuestService questService;
-    private final ObjectMapper objectMapper; // Boot auto-configures this bean
+    private final ObjectMapper objectMapper;
 
     @GetMapping
     public String list(Model model) {
@@ -39,27 +39,24 @@ public class QuestController {
                          @RequestParam(value = "dataJson", required = false) String dataJson,
                          Model model) {
 
-        // Parse JSONB payload exactly like before; on error fall back to {}
         if (dataJson != null && !dataJson.isBlank()) {
             try {
                 var parsed = objectMapper.readValue(dataJson, new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<String,Object>>(){});
                 quest.setData(parsed);
             } catch (Exception ignored) {
-                quest.setData(java.util.Map.of()); // keep old behavior
+                quest.setData(java.util.Map.of());
             }
         } else if (quest.getData() == null) {
             quest.setData(java.util.Map.of());
         }
 
-        // Cross-field rule: expiry must be after notBefore (if both provided)
         if (quest.getNotBefore() != null && quest.getExpiry() != null &&
                 quest.getExpiry().isBefore(quest.getNotBefore())) {
             binding.rejectValue("expiry", "expiry.beforeNotBefore", "Expiry must be after Not Before");
         }
 
         if (binding.hasErrors()) {
-            // Re-show form with errors; keep the raw JSON so user doesn’t lose it
-            model.addAttribute("dataJson", dataJson);
+            model.addAttribute("sdataJson", dataJson);
             return "quests/create";
         }
 
@@ -79,7 +76,7 @@ public class QuestController {
         try {
             return objectMapper.readValue(json, new TypeReference<Map<String, Object>>() {});
         } catch (Exception ignored) {
-            return Collections.emptyMap(); // preserve current fallback
+            return Collections.emptyMap();
         }
     }
 

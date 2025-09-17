@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import wanderers.ai.admin_portal.model.Quest;
 import wanderers.ai.admin_portal.service.QuestService;
@@ -35,7 +36,7 @@ public class QuestController {
 
     @PostMapping
     public String create(@Valid @ModelAttribute("quest") Quest quest,
-                         org.springframework.validation.BindingResult binding,
+                         BindingResult binding,
                          @RequestParam(value = "dataJson", required = false) String dataJson,
                          Model model) {
 
